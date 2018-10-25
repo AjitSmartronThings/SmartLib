@@ -1,88 +1,216 @@
-# SmartLib - A Onvif based Library
+# ONVIF-Java
+---
+[ ![Download](https://api.bintray.com/packages/tomasverhelst/ONVIF-Java/ONVIF-Java/images/download.svg) ](https://bintray.com/tomasverhelst/ONVIF-Java/ONVIF-Java/_latestVersion)
 
-One Paragraph of project description goes here
+<p align="center"> 
+<img src="https://botw-pd.s3.amazonaws.com/styles/logo-thumbnail/s3/112012/onvif-converted.png?itok=yqR6_a6G">
+</p>
 
-## Getting Started
+ONVIF is an open industry forum that provides and promotes standardized interfaces for effective interoperability of IP-based physical security products. ONVIF was created to make a standard way of how IP products within CCTV and other security areas can communicate with each other.
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
 
-### Prerequisites
+## Features
 
-What things you need to install the software and how to install them
+  - **ONVIF & UPnP discovery**
+  - ONVIF device management (Services, device information, media profiles, raw media stream uri)
+  - UPnP device information
+  - Easily extendable with your own requests
+  - **Android supported!**
 
-```
-Give examples
-```
+## Discovery
+---
+The OnvifDiscovery class uses the **Web Services Dynamic Discovery (WS-Discovery)**. This is a technical specification that defines a multicast discovery protocol to locate services on a local network. It operates over TCP and UDP port ```3702``` and uses IP multicast address ```239.255.255.250```. As the name suggests, the actual communication between nodes is done using web services standards, notably **SOAP-over-UDP**.
 
-### Installing
+With WS-Discovery, the discovery tool puts SSDP queries on the network from its unicast address to ```239.255.255.250``` multicast address, sending them to the well-known UDP port 3702. The device receives the query, and answers to the discovery tool's unicast IP address from its unicast IP address. The reply contains information about the Web Services (WS) available on the device.
 
-A step by step series of examples that tell you how to get a development env running
+**UPnP** works in a very similar way, but on a different UDP port (```1900```).
+Compared to the WS-Discovery, the UPnP is intended for a general use (data sharing, communication, entertainment).
 
-Say what the step will be
+```java
+DiscoveryManager manager = new DiscoveryManager();
+manager.setDiscoveryTimeout(10000);
+manager.discover(new DiscoveryListener() {
+    @Override
+    public void onDiscoveryStarted() {
+        System.out.println("Discovery started");
+    }
 
-```
-Give the example
-```
-
-And repeat
-
-```
-until finished
-```
-
-End with an example of getting some data out of the system or using it for a little demo
-
-## Running the tests
-
-Explain how to run the automated tests for this system
-
-### Break down into end to end tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
-
-### And coding style tests
-
-Explain what these tests test and why
-
-```
-Give an example
+    @Override
+    public void onDevicesFound(List<Device> devices) {
+        for (Device device : devices)
+            System.out.println("Devices found: " + device.getHostName());
+    }
+});
 ```
 
-## Deployment
+## ONVIF
+---
 
-Add additional notes about how to deploy this on a live system
+With the ```OnvifManager``` class it is possible to send requests to an ONVIF-supported device. All requests are sent asynchronously and you can use the ```OnvifResponseListener``` for errors and custom response handling. It is possible to create your own ```OnvifDevice``` or retrieve a list from the ```discover``` method in the ```DiscoveryManager```
 
-## Built With
+```java
+onvifManager = new OnvifManager();
+onvifManager.setOnvifResponseListener(this);
+OnvifDevice device = new OnvifDevice("192.168.0.131", "username", "password");
+```
 
-* [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
-* [Maven](https://maven.apache.org/) - Dependency Management
-* [ROME](https://rometools.github.io/rome/) - Used to generate RSS Feeds
+### Services
+Returns information about services on the device.
 
-## Contributing
+```java
+onvifManager.getServices(device, new OnvifServicesListener() {
+    @Override
+    public void onServicesReceived(@Nonnull OnvifDevice onvifDevice, OnvifServices services) {
+        
+    }
+});
+```
 
-Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
+### Device information
+Returns basic device information from the device. This includes the manufacturer, serial number, hardwareId, ...
 
-## Versioning
+```java
+onvifManager.getDeviceInformation(device, new OnvifDeviceInformationListener() {
+    @Override
+    public void onDeviceInformationReceived(@Nonnull OnvifDevice device, 
+                                            @Nonnull OnvifDeviceInformation deviceInformation) {
+        
+    }
+});
+```
 
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags). 
+### Media Profiles
+Returns pre-configured or dynamically configured profiles. This command lists all configured profiles in a device. The client does not need to know the media profile in order to use the command.
 
-## Authors
+```java
+onvifManager.getMediaProfiles(device, new OnvifMediaProfilesListener() {
+    @Override
+    public void onMediaProfilesReceived(@Nonnull OnvifDevice device, 
+                                        @Nonnull List<OnvifMediaProfile> mediaProfiles) {
+        
+    }
+});
+```
 
-* **Billie Thompson** - *Initial work* - [PurpleBooth](https://github.com/PurpleBooth)
+### Media Stream URI
+Returns a raw media stream URI that remains valid indefinitely even if the profile is changed.
 
-See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
+```java
+onvifManager.getMediaStreamURI(device, mediaProfiles.get(0), new OnvifMediaStreamURIListener() {
+    @Override
+    public void onMediaStreamURIReceived(@Nonnull OnvifDevice device, 
+                                        @Nonnull OnvifMediaProfile profile, @Nonnull String uri) {
+        
+    }
+});
+```
 
-## License
+## UPnP
+---
 
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+With the ```UPnPManager``` it is possible to retrieve device information from a locally connected UPnP device. A ```UPnPDevice``` can be created manually or discovered from the ```DiscoveryManager``` using ```discovery.discover(DiscoveryMode.UPNP)```
 
-## Acknowledgments
+```java
+UPnPDevice device = new UPnPDevice("192.168.0.160");
+device.setLocation("http://192.168.0.160:49152/rootdesc1.xml");
+UPnPManager uPnPManager = new UPnPManager();
+uPnPManager.getDeviceInformation(device, new UPnPDeviceInformationListener() {
+    @Override
+    public void onDeviceInformationReceived(@Nonnull UPnPDevice device, 
+                                            @Nonnull UPnPDeviceInformation information) {
+        Log.i(TAG, device.getHostName() + ": " + information.getFriendlyName());
+    }
+    @Override
+    public void onError(@Nonnull UPnPDevice onvifDevice, int errorCode, String errorMessage) {
+        Log.e(TAG, "Error: " + errorMessage);
+    }
+});
+```
 
-* Hat tip to anyone whose code was used
-* Inspiration
-* etc
+## Custom requests
+---
+
+It is possible to implement your custom ONVIF request by creating a new class and implementing the ```OnvifRequest``` interface and overriding the ```getXml()``` and ```getType()``` methods.
+
+```java
+public class PTZRequest implements OnvifRequest {
+    @Override
+    public String getXml() {
+        return "<GetServices xmlns=\"http://www.onvif.org/ver10/device/wsdl\">" +
+                "<IncludeCapability>false</IncludeCapability>" +
+                "</GetServices>";
+    }
+    @Override
+    public OnvifType getType() {
+        return OnvifType.CUSTOM;
+    }
+}
+```
+
+and send it to the appropriate ```OnvifDevice```:
+
+```java
+onvifManager.sendOnvifRequest(device, new PTZRequest());
+```
+
+Use the ```OnvifResponseListener``` to receive responses from your custom requests.
+
+## Android
+---
+In order to receive multicasts packets on your Android device, you'll have to acquire a lock on your WifiManager before making a discovery. Make sure to release the lock once the discovery is completed. More information can be found here: https://developer.android.com/reference/android/net/wifi/WifiManager.MulticastLock
+
+```java
+private void lockMulticast() {
+    WifiManager wifi = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+    if (wifi == null)
+        return;
+
+    WifiManager.MulticastLock lock = wifi.createMulticastLock("ONVIF");
+    lock.acquire();
+}
+```
+
+Download
+--------
+
+Download [the latest JAR][2] or grab via Maven:
+```xml
+<dependency>
+  <groupId>be.teletask.onvif</groupId>
+  <artifactId>onvif</artifactId>
+  <version>1.0.0</version>
+</dependency>
+```
+or Gradle:
+```groovy
+compile 'be.teletask.onvif:onvif:1.0.0'
+```
+
+## Todos
+
+ - Implementation ONVIF version management
+ - Implementation PTZ
+
+## Pull Requests
+---
+Feel free to send pull requests. 
+
+License
+=======
+
+    Copyright 2018 TELETASK BVBA.
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+    
+[2]: https://bintray.com/tomasverhelst/ONVIF-Java/ONVIF-Java/1.0.0#files/be/teletask/onvif/onvif/1.0.0
 
