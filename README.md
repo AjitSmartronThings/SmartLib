@@ -128,17 +128,17 @@ Use the ```OnvifResponseListener``` to receive responses from your custom reques
 Download
 --------
 
-Download [the latest JAR][2] or grab via Maven:
+Download the latest JAR or grab via Maven:
 ```xml
 <dependency>
-	    <groupId>com.github.AjitSmartronThings</groupId>
-	    <artifactId>SmartLib</artifactId>
-	    <version>v1.0.0</version>
-	</dependency>
+	<groupId>com.github.AjitSmartronThings</groupId>
+	<artifactId>SmartLib</artifactId>
+	 <version>v1.0.0</version>
+</dependency>
 ```
 or Gradle:
 ```groovy
-	 implementation 'com.github.AjitSmartronThings:SmartLib:v1.0.0'
+implementation 'com.github.AjitSmartronThings:SmartLib:v1.0.0'
 ```
 
 License
