@@ -1,15 +1,13 @@
 # SmartLib - A Onvif Library
 ---
-ONVIF is an open industry forum that provides and promotes standardized interfaces for effective interoperability of IP-based physical security products. ONVIF was created to make a standard way of how IP products within CCTV and other security areas can communicate with each other.
-
+	**SmartLib** is useful for discovery IP cameras within networks which supports ONVIF and UPNP protocols.We can also add camera which supports these protocols.
 
 ## Features
 
   - **ONVIF & UPnP discovery**
   - ONVIF device management (Services, device information, media profiles, raw media stream uri)
   - UPnP device information
-  - Easily extendable with your own requests
-  - **Android supported!**
+  - Easily extendable with your custom requests
 
 ## Discovery
 ---
@@ -95,28 +93,6 @@ onvifManager.getMediaStreamURI(device, mediaProfiles.get(0), new OnvifMediaStrea
     public void onMediaStreamURIReceived(@Nonnull OnvifDevice device, 
                                         @Nonnull OnvifMediaProfile profile, @Nonnull String uri) {
         
-    }
-});
-```
-
-## UPnP
----
-
-With the ```UPnPManager``` it is possible to retrieve device information from a locally connected UPnP device. A ```UPnPDevice``` can be created manually or discovered from the ```DiscoveryManager``` using ```discovery.discover(DiscoveryMode.UPNP)```
-
-```java
-UPnPDevice device = new UPnPDevice("192.168.0.160");
-device.setLocation("http://192.168.0.160:49152/rootdesc1.xml");
-UPnPManager uPnPManager = new UPnPManager();
-uPnPManager.getDeviceInformation(device, new UPnPDeviceInformationListener() {
-    @Override
-    public void onDeviceInformationReceived(@Nonnull UPnPDevice device, 
-                                            @Nonnull UPnPDeviceInformation information) {
-        Log.i(TAG, device.getHostName() + ": " + information.getFriendlyName());
-    }
-    @Override
-    public void onError(@Nonnull UPnPDevice onvifDevice, int errorCode, String errorMessage) {
-        Log.e(TAG, "Error: " + errorMessage);
     }
 });
 ```
