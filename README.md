@@ -149,21 +149,6 @@ onvifManager.sendOnvifRequest(device, new PTZRequest());
 
 Use the ```OnvifResponseListener``` to receive responses from your custom requests.
 
-## Android
----
-In order to receive multicasts packets on your Android device, you'll have to acquire a lock on your WifiManager before making a discovery. Make sure to release the lock once the discovery is completed. More information can be found here: https://developer.android.com/reference/android/net/wifi/WifiManager.MulticastLock
-
-```java
-private void lockMulticast() {
-    WifiManager wifi = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
-    if (wifi == null)
-        return;
-
-    WifiManager.MulticastLock lock = wifi.createMulticastLock("ONVIF");
-    lock.acquire();
-}
-```
-
 Download
 --------
 
@@ -179,15 +164,6 @@ or Gradle:
 ```groovy
 	 implementation 'com.github.AjitSmartronThings:SmartLib:v1.0.0'
 ```
-
-## Todos
-
- - Implementation ONVIF version management
- - Implementation PTZ
-
-## Pull Requests
----
-Feel free to send pull requests. 
 
 License
 =======
