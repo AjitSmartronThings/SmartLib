@@ -133,7 +133,7 @@ Download the latest JAR or grab via Maven:
 <dependency>
 	<groupId>com.github.AjitSmartronThings</groupId>
 	<artifactId>SmartLib</artifactId>
-	 <version>v1.0.0</version>
+	<version>v1.0.0</version>
 </dependency>
 ```
 or Gradle:
