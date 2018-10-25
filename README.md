@@ -1,11 +1,5 @@
-# ONVIF-Java
+# SmartLib - A Onvif Library
 ---
-[ ![Download](https://api.bintray.com/packages/tomasverhelst/ONVIF-Java/ONVIF-Java/images/download.svg) ](https://bintray.com/tomasverhelst/ONVIF-Java/ONVIF-Java/_latestVersion)
-
-<p align="center"> 
-<img src="https://botw-pd.s3.amazonaws.com/styles/logo-thumbnail/s3/112012/onvif-converted.png?itok=yqR6_a6G">
-</p>
-
 ONVIF is an open industry forum that provides and promotes standardized interfaces for effective interoperability of IP-based physical security products. ONVIF was created to make a standard way of how IP products within CCTV and other security areas can communicate with each other.
 
 
@@ -176,14 +170,14 @@ Download
 Download [the latest JAR][2] or grab via Maven:
 ```xml
 <dependency>
-  <groupId>be.teletask.onvif</groupId>
-  <artifactId>onvif</artifactId>
-  <version>1.0.0</version>
-</dependency>
+	    <groupId>com.github.AjitSmartronThings</groupId>
+	    <artifactId>SmartLib</artifactId>
+	    <version>v1.0.0</version>
+	</dependency>
 ```
 or Gradle:
 ```groovy
-compile 'be.teletask.onvif:onvif:1.0.0'
+	 implementation 'com.github.AjitSmartronThings:SmartLib:v1.0.0'
 ```
 
 ## Todos
@@ -198,7 +192,7 @@ Feel free to send pull requests.
 License
 =======
 
-    Copyright 2018 TELETASK BVBA.
+    Copyright 2018 TThings - A Smartron Company.
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -212,5 +206,5 @@ License
     See the License for the specific language governing permissions and
     limitations under the License.
     
-[2]: https://bintray.com/tomasverhelst/ONVIF-Java/ONVIF-Java/1.0.0#files/be/teletask/onvif/onvif/1.0.0
+
 
