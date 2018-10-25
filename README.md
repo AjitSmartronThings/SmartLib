@@ -45,7 +45,7 @@ With the ```OnvifManager``` class it is possible to send requests to an ONVIF-su
 ```java
 onvifManager = new OnvifManager();
 onvifManager.setOnvifResponseListener(this);
-OnvifDevice device = new OnvifDevice("192.168.0.131", "username", "password");
+OnvifDevice device = new OnvifDevice("192.168.0.4:36000", "admin", "admin");
 ```
 
 ### Services
