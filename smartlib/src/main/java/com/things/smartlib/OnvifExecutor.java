@@ -28,6 +28,7 @@ import com.things.smartlib.requests.GetMediaProfilesRequest;
 import com.things.smartlib.requests.GetMediaStreamRequest;
 import com.things.smartlib.requests.GetServicesRequest;
 import com.things.smartlib.requests.OnvifRequest;
+import com.things.smartlib.requests.PTZRequest;
 import com.things.smartlib.responses.OnvifResponse;
 
 import java.io.IOException;
@@ -178,6 +179,10 @@ public class OnvifExecutor {
                 GetMediaStreamRequest streamRequest = (GetMediaStreamRequest) response.getOnvifRequest();
                 streamRequest.getListener().onvifStreamUriReceived(device, streamRequest.getMediaProfile(),
                         new GetMediaStreamParser().parse(response));
+                break;
+            case PTZ:
+                PTZRequest ptzRequest = (PTZRequest) response.getOnvifRequest();
+                ptzRequest.getOnvifPTZListener().onPTZReceived(device,response.isSuccess());
                 break;
             default:
                 onvifResponseListener.onResponse(device, response);

@@ -2,16 +2,20 @@ package com.things.smartlib;
 
 import com.things.smartlib.listeners.OnvifDeviceInformationListener;
 import com.things.smartlib.listeners.OnvifMediaProfileListener;
+import com.things.smartlib.listeners.OnvifPTZListener;
 import com.things.smartlib.listeners.OnvifResponseListener;
 import com.things.smartlib.listeners.OnvifServiceListener;
 import com.things.smartlib.listeners.OnvifStreamUriListener;
 import com.things.smartlib.models.OnvifDevice;
 import com.things.smartlib.models.OnvifMediaProfile;
+import com.things.smartlib.models.PTZType;
 import com.things.smartlib.requests.GetDeviceInformationRequest;
 import com.things.smartlib.requests.GetMediaProfilesRequest;
 import com.things.smartlib.requests.GetMediaStreamRequest;
 import com.things.smartlib.requests.GetServicesRequest;
 import com.things.smartlib.requests.OnvifRequest;
+import com.things.smartlib.requests.PTZRequest;
+import com.things.smartlib.requests.PTZStopRequest;
 import com.things.smartlib.responses.OnvifResponse;
 
 /**
@@ -58,6 +62,18 @@ public class OnvifManager implements OnvifResponseListener{
     public void getMediaStreamURI(OnvifDevice device, OnvifMediaProfile profile, OnvifStreamUriListener listener) {
         OnvifRequest request = new GetMediaStreamRequest(profile, listener);
         onvifExecutor.sendRequest(device, request);
+    }
+
+    public void sendPTZRequest(OnvifDevice onvifDevice, OnvifMediaProfile onvifMediaProfile, PTZType ptzType, OnvifPTZListener onvifPTZListener)
+    {
+        OnvifRequest request = new PTZRequest(onvifMediaProfile,ptzType,onvifPTZListener);
+        onvifExecutor.sendRequest(onvifDevice,request);
+    }
+
+    public void stopPTZRequest(OnvifDevice onvifDevice, OnvifMediaProfile onvifMediaProfile)
+    {
+        OnvifRequest request = new PTZStopRequest(onvifMediaProfile);
+        onvifExecutor.sendRequest(onvifDevice,request);
     }
 
     public void sendOnvifRequest(OnvifDevice device, OnvifRequest request) {
