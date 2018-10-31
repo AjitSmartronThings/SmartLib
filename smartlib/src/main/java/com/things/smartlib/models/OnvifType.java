@@ -1,5 +1,11 @@
 package com.things.smartlib.models;
 
+import static com.things.smartlib.TronXConstants.WSDL_DEVICE;
+import static com.things.smartlib.TronXConstants.WSDL_MEDIA_PROFILE;
+import static com.things.smartlib.TronXConstants.WSDL_MEDIA_URI;
+import static com.things.smartlib.TronXConstants.WSDL_PTZ;
+import static com.things.smartlib.TronXConstants.WSDL_SERVICE;
+
 /**
  * @author :       Ajit Gaikwad
  * @version :      V1.0
@@ -11,11 +17,12 @@ package com.things.smartlib.models;
  */
 public enum OnvifType {
     CUSTOM(""),
-    GET_SERVICES("http://www.onvif.org/ver10/device/wsdl"),
-    GET_DEVICE_INFORMATION("http://www.onvif.org/ver10/device/wsdl"),
-    GET_MEDIA_PROFILES("http://www.onvif.org/ver10/media/wsdl"),
-    GET_STREAM_URI("http://www.onvif.org/ver10/media/wsdl"),
-    PTZ("http://www.onvif.org/ver20/ptz/wsdl");
+    GET_SERVICES(WSDL_SERVICE),
+    GET_DEVICE_INFORMATION(WSDL_DEVICE),
+    GET_MEDIA_PROFILES(WSDL_MEDIA_PROFILE),
+    GET_STREAM_URI(WSDL_MEDIA_URI),
+    PTZ(WSDL_PTZ),
+    PTZ_STOP(WSDL_PTZ);
 
     public final String namespace;
 

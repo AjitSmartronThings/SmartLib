@@ -3,6 +3,8 @@ package com.things.smartlib.requests;
 import com.things.smartlib.listeners.OnvifServiceListener;
 import com.things.smartlib.models.OnvifType;
 
+import static com.things.smartlib.TronXConstants.REQUEST_SERVICE;
+
 /**
  * The type Get services request.
  *
@@ -49,9 +51,7 @@ public class GetServicesRequest implements OnvifRequest {
 
     @Override
     public String getXml() {
-        return "<GetServices xmlns=\"http://www.onvif.org/ver10/device/wsdl\">" +
-                "<IncludeCapability>false</IncludeCapability>" +
-                "</GetServices>";
+        return REQUEST_SERVICE;
     }
 
     @Override

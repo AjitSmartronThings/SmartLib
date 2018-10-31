@@ -27,6 +27,10 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
+import static com.things.smartlib.TronXConstants.DISCOVERY_TIMEOUT;
+import static com.things.smartlib.TronXConstants.MULTICAST_ADDRESS_IPV4;
+import static com.things.smartlib.TronXConstants.MULTICAST_ADDRESS_IPV6;
+
 /**
  * The type Onvif discovery.
  *
@@ -45,9 +49,6 @@ public class OnvifDiscovery {
      */
 //Constants
     public static final String TAG = OnvifDiscovery.class.getSimpleName();
-    private static final String MULTICAST_ADDRESS_IPV4 = "239.255.255.250"; // Simple Service Discovery Protocol
-    private static final String MULTICAST_ADDRESS_IPV6 = "[FF02::C]";
-    private static int DISCOVERY_TIMEOUT = 15000;
 
     private static final Random random = new SecureRandom();
 

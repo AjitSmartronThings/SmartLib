@@ -25,10 +25,12 @@ public abstract class OnvifParser<T> {
      */
     public static final String TAG = OnvifParser.class.getSimpleName();
 
+
     private XmlPullParserFactory xmlPullParserFactory;
     private XmlPullParser xmlPullParser;
     /**
      * The Event type.
+     * e.g.	START_DOCUMENT , END_DOCUMENT , START_TAG , END_TAG
      */
     int eventType;
 
@@ -37,9 +39,18 @@ public abstract class OnvifParser<T> {
      */
     public OnvifParser() {
         try {
+            /**
+             * Create a new instance of a PullParserFactory used to create XML pull parser.
+             */
         xmlPullParserFactory = XmlPullParserFactory.newInstance();
+            /**
+             * Specifies that the parser produced by this factory will provide support for XML namespaces.
+             */
         xmlPullParserFactory.setNamespaceAware(true);
-            xmlPullParser=xmlPullParserFactory.newPullParser();
+            /**
+             *  Creates a new instance of a XML Pull Parser using the currently configured factory parameters.
+             */
+        xmlPullParser=xmlPullParserFactory.newPullParser();
         } catch (XmlPullParserException e) {
             e.printStackTrace();
         }

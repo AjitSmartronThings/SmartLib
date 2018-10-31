@@ -3,6 +3,8 @@ package com.things.smartlib.requests;
 import com.things.smartlib.listeners.OnvifDeviceInformationListener;
 import com.things.smartlib.models.OnvifType;
 
+import static com.things.smartlib.TronXConstants.REQUEST_DEVICE_INFO;
+
 /**
  * The type Get device information request.
  *
@@ -49,7 +51,7 @@ public class GetDeviceInformationRequest implements OnvifRequest {
 
     @Override
     public String getXml() {
-        return "<GetDeviceInformation xmlns=\"http://www.onvif.org/ver10/device/wsdl\">" + "</GetDeviceInformation>";
+        return REQUEST_DEVICE_INFO;
     }
 
     @Override

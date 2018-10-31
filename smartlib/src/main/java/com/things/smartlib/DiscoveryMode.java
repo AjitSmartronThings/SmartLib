@@ -1,5 +1,8 @@
 package com.things.smartlib;
 
+import static com.things.smartlib.TronXConstants.DM_ONVIF;
+import static com.things.smartlib.TronXConstants.DM_UPNP;
+
 /**
  * @author :       Ajit Gaikwad
  * @version :      V1.0
@@ -10,8 +13,8 @@ package com.things.smartlib;
  * @see <a href="https://smartron.com/things.html">TThings a Smartron Company</a>
  */
 public enum DiscoveryMode {
-    ONVIF(3702),
-    UPNP(1900);
+    ONVIF(DM_ONVIF),
+    UPNP(DM_UPNP);
 
     public final int port;
 

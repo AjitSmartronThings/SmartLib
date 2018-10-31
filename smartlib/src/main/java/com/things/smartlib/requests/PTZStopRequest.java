@@ -4,6 +4,8 @@ import com.things.smartlib.models.OnvifMediaProfile;
 import com.things.smartlib.models.OnvifType;
 
 /**
+ * The type Ptz stop request.
+ *
  * @author :       Ajit Gaikwad
  * @version :      V1.0
  * @email :        ajitprakash.g@tthings.smartron.com
@@ -18,11 +20,21 @@ public class PTZStopRequest implements OnvifRequest{
 
     private final  OnvifMediaProfile mediaProfile;
 
+    /**
+     * Instantiates a new Ptz stop request.
+     *
+     * @param mediaProfile the media profile
+     */
     public PTZStopRequest(OnvifMediaProfile mediaProfile) {
         super();
         this.mediaProfile = mediaProfile;
     }
 
+    /**
+     * Gets media profile.
+     *
+     * @return the media profile
+     */
     public OnvifMediaProfile getMediaProfile() {
         return mediaProfile;
     }
@@ -42,6 +54,6 @@ public class PTZStopRequest implements OnvifRequest{
 
     @Override
     public OnvifType getType() {
-        return OnvifType.PTZ;
+        return OnvifType.PTZ_STOP;
     }
 }

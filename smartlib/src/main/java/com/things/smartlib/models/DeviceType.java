@@ -1,5 +1,7 @@
 package com.things.smartlib.models;
 
+import com.things.smartlib.TronXConstants;
+
 /**
  * The enum Device type.
  *

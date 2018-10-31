@@ -99,4 +99,5 @@ public class OnvifDevice extends Device{
     public DeviceType getType() {
         return DeviceType.ONVIF;
     }
+
 }

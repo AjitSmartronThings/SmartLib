@@ -3,6 +3,8 @@ package com.things.smartlib.requests;
 import com.things.smartlib.listeners.OnvifMediaProfileListener;
 import com.things.smartlib.models.OnvifType;
 
+import static com.things.smartlib.TronXConstants.REQUEST_MEDIA_PROFILE;
+
 /**
  * The type Get media profiles request.
  *
@@ -49,7 +51,7 @@ public class GetMediaProfilesRequest implements OnvifRequest {
 
     @Override
     public String getXml() {
-        return "<GetProfiles xmlns=\"http://www.onvif.org/ver10/media/wsdl\"/>";
+        return REQUEST_MEDIA_PROFILE;
     }
 
     @Override

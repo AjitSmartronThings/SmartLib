@@ -1,5 +1,10 @@
 package com.things.smartlib.models;
 
+import static com.things.smartlib.TronXConstants.ONVIF_PATH_DEVICE_INFORMATION;
+import static com.things.smartlib.TronXConstants.ONVIF_PATH_PROFILES;
+import static com.things.smartlib.TronXConstants.ONVIF_PATH_SERVICES;
+import static com.things.smartlib.TronXConstants.ONVIF_PATH_STREAM_URI;
+
 /**
  * The type Onvif services.
  *
@@ -17,11 +22,6 @@ public class OnvifServices {
      * The constant TAG.
      */
     public static final String TAG = OnvifServices.class.getSimpleName();//Tag For Class Name
-
-    public static final String ONVIF_PATH_SERVICES = "/onvif/device_service";//Device Services URI
-    public static final String ONVIF_PATH_DEVICE_INFORMATION = "/onvif/device_service";//Device Information URI
-    public static final String ONVIF_PATH_PROFILES = "/onvif/device_service";//Device Profile URI
-    public static final String ONVIF_PATH_STREAM_URI = "/onvif/device_service";//Device Media Stream URI
 
     //Attributes
     private String servicepath = ONVIF_PATH_SERVICES;

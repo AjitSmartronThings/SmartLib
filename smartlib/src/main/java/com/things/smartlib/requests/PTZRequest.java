@@ -6,6 +6,8 @@ import com.things.smartlib.models.OnvifType;
 import com.things.smartlib.models.PTZType;
 
 /**
+ * The type Ptz request.
+ *
  * @author :       Ajit Gaikwad
  * @version :      V1.0
  * @email :        ajitprakash.g@tthings.smartron.com
@@ -22,6 +24,13 @@ public class PTZRequest implements OnvifRequest{
     private final int xMove,yMove,zoomVal;
     private final OnvifPTZListener onvifPTZListener;
 
+    /**
+     * Instantiates a new Ptz request.
+     *
+     * @param onvifMediaProfile the onvif media profile
+     * @param ptzType           the ptz type
+     * @param onvifPTZListener  the onvif ptz listener
+     */
     public PTZRequest(OnvifMediaProfile onvifMediaProfile, PTZType ptzType, OnvifPTZListener onvifPTZListener) {
         super();
         this.onvifMediaProfile = onvifMediaProfile;
@@ -31,10 +40,20 @@ public class PTZRequest implements OnvifRequest{
         this.onvifPTZListener = onvifPTZListener;
     }
 
+    /**
+     * Gets onvif media profile.
+     *
+     * @return the onvif media profile
+     */
     public OnvifMediaProfile getOnvifMediaProfile() {
         return onvifMediaProfile;
     }
 
+    /**
+     * Gets onvif ptz listener.
+     *
+     * @return the onvif ptz listener
+     */
     public OnvifPTZListener getOnvifPTZListener() {
         return onvifPTZListener;
     }

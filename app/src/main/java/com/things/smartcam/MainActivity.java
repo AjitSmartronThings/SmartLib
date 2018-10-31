@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity implements OnvifResponseList
         //Getting Device Services,Device Information,Device Profiles,Device Stream URI
         OnvifManager onvifManager=new OnvifManager();
         onvifManager.setOnvifResponseListener(this);
-        OnvifDevice onvifDevice=new OnvifDevice("192.168.0.4:36000","admin","admin");
+        OnvifDevice onvifDevice=new OnvifDevice("192.168.0.2:36000","admin","admin");
         onvifManager.getServices(onvifDevice, new OnvifServiceListener() {
             @Override
             public void onServicesReceived(OnvifDevice onvifDevice, OnvifServices path) {
@@ -54,22 +54,27 @@ public class MainActivity extends AppCompatActivity implements OnvifResponseList
                                     @Override
                                     public void onvifStreamUriReceived(OnvifDevice onvifDevice, OnvifMediaProfile onvifMediaProfile, String uri) {
                                         System.out.println(""+uri);
-                                        try {
                                        onvifManager.sendPTZRequest(device, mediaProfile, PTZType.LEFT_MOVE, new OnvifPTZListener() {
                                            @Override
                                            public void onPTZReceived(OnvifDevice onvifDevice, boolean status) {
+                                               System.out.println(status);
+                                               try {
+                                                   Thread.sleep(10000);
+                                                   onvifManager.stopPTZRequest(device,mediaProfile);
+                                                   onvifManager.sendPTZRequest(device, mediaProfile, PTZType.RIGHT_MOVE, new OnvifPTZListener() {
+                                                       @Override
+                                                       public void onPTZReceived(OnvifDevice onvifDevice, boolean status) {
 
+                                                       }
+                                                   });
+                                               } catch (InterruptedException e) {
+                                                   e.printStackTrace();
+                                               }
                                            }
                                        });
-                                        Thread.sleep(10000);
-                                            onvifManager.stopPTZRequest(device,mediaProfile);
-                                            onvifManager.sendPTZRequest(device, mediaProfile, PTZType.RIGHT_MOVE, new OnvifPTZListener() {
-                                                @Override
-                                                public void onPTZReceived(OnvifDevice onvifDevice, boolean status) {
 
-                                                }
-                                            });
-                                            Thread.sleep(10000);
+
+                                            /*Thread.sleep(10000);
                                             onvifManager.stopPTZRequest(device,mediaProfile);
                                             onvifManager.sendPTZRequest(device, mediaProfile, PTZType.UP_MOVE, new OnvifPTZListener() {
                                                 @Override
@@ -100,10 +105,7 @@ public class MainActivity extends AppCompatActivity implements OnvifResponseList
                                                 public void onPTZReceived(OnvifDevice onvifDevice, boolean status) {
 
                                                 }
-                                            });
-                                        } catch (InterruptedException e) {
-                                            e.printStackTrace();
-                                        }
+                                            });*/
                                     }
                                 });
                             }

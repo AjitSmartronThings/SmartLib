@@ -29,13 +29,19 @@ import com.things.smartlib.requests.GetMediaStreamRequest;
 import com.things.smartlib.requests.GetServicesRequest;
 import com.things.smartlib.requests.OnvifRequest;
 import com.things.smartlib.requests.PTZRequest;
+import com.things.smartlib.requests.PTZStopRequest;
 import com.things.smartlib.responses.OnvifResponse;
 
 import java.io.IOException;
+import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
 
+import static com.things.smartlib.TronXConstants.CONNECTION_MEDIATYPE;
+import static com.things.smartlib.TronXConstants.CONNECTION_TIMEOUT;
+import static com.things.smartlib.TronXConstants.READ_TIMEOUT;
+import static com.things.smartlib.TronXConstants.WRITE_TIMEOUT;
 import static com.things.smartlib.models.OnvifType.GET_DEVICE_INFORMATION;
 import static com.things.smartlib.models.OnvifType.GET_MEDIA_PROFILES;
 import static com.things.smartlib.models.OnvifType.GET_STREAM_URI;
@@ -81,14 +87,14 @@ public class OnvifExecutor {
         Map<String, CachingAuthenticator> authCache = new ConcurrentHashMap<>();
 
         client = new OkHttpClient.Builder()
-                .connectTimeout(10000, TimeUnit.SECONDS)
-                .writeTimeout(100, TimeUnit.SECONDS)
-                .readTimeout(10000, TimeUnit.SECONDS)
+                .connectTimeout(CONNECTION_TIMEOUT, TimeUnit.SECONDS)
+                .writeTimeout(WRITE_TIMEOUT, TimeUnit.SECONDS)
+                .readTimeout(READ_TIMEOUT, TimeUnit.SECONDS)
                 .authenticator(new CachingAuthenticatorDecorator(authenticator, authCache))
                 .addInterceptor(new AuthenticationCacheInterceptor(authCache))
                 .build();
 
-        reqBodyType = MediaType.parse("application/soap+xml; charset=utf-8;");
+        reqBodyType = MediaType.parse(CONNECTION_MEDIATYPE);
     }
 
     //Methods
@@ -184,6 +190,10 @@ public class OnvifExecutor {
                 PTZRequest ptzRequest = (PTZRequest) response.getOnvifRequest();
                 ptzRequest.getOnvifPTZListener().onPTZReceived(device,response.isSuccess());
                 break;
+           /* case PTZ_STOP:
+                PTZStopRequest ptzStopRequest = (PTZStopRequest) response.getOnvifRequest();
+                ptzStopRequest.getOnvifPTZListener().onPTZReceived(device,response.isSuccess());
+                break;*/
             default:
                 onvifResponseListener.onResponse(device, response);
                 break;

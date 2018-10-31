@@ -1,5 +1,10 @@
 package com.things.smartlib.models;
 
+import static com.things.smartlib.TronXConstants.DT_DEVICE;
+import static com.things.smartlib.TronXConstants.DT_NW_VIDEO_TRANSMITTER;
+import static com.things.smartlib.TronXConstants.ONE;
+import static com.things.smartlib.TronXConstants.ZERO;
+
 /**
  * The enum Discovery type.
  *
@@ -15,11 +20,11 @@ public enum DiscoveryType {
     /**
      * Device discovery type.
      */
-    DEVICE(0, "Device"),
+    DEVICE(ZERO, DT_DEVICE),
     /**
      * Network video transmitter discovery type.
      */
-    NETWORK_VIDEO_TRANSMITTER(1, "NetworkVideoTransmitter");
+    NETWORK_VIDEO_TRANSMITTER(ONE, DT_NW_VIDEO_TRANSMITTER);
 
     /**
      * The Id.

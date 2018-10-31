@@ -1,8 +1,13 @@
 package com.things.smartlib.requests;
 
+import com.things.smartlib.OnvifXMLBuilder;
 import com.things.smartlib.listeners.OnvifStreamUriListener;
 import com.things.smartlib.models.OnvifMediaProfile;
 import com.things.smartlib.models.OnvifType;
+
+import java.util.Locale;
+
+import static com.things.smartlib.TronXConstants.REQUEST_MEDIA_STREAM_URI;
 
 /**
  * The type Get media stream request.
@@ -62,13 +67,8 @@ public class GetMediaStreamRequest implements OnvifRequest {
 
     @Override
     public String getXml() {
-        return "<GetStreamUri xmlns=\"http://www.onvif.org/ver10/media/wsdl\">"
-                + "<StreamSetup>"
-                + "<Stream xmlns=\"http://www.onvif.org/ver10/schema\">RTP-Unicast</Stream>"
-                + "<Transport xmlns=\"http://www.onvif.org/ver10/schema\"><Protocol>RTSP</Protocol></Transport>"
-                + "</StreamSetup>"
-                + "<ProfileToken>" + mediaProfile.getToken() + "</ProfileToken>"
-                + "</GetStreamUri>";
+        String stremUri = String.format(Locale.getDefault(), REQUEST_MEDIA_STREAM_URI, mediaProfile.getToken());
+        return stremUri;
     }
 
     @Override

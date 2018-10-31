@@ -3,6 +3,11 @@ package com.things.smartlib;
 import android.nfc.Tag;
 import android.widget.Toast;
 
+import static com.things.smartlib.TronXConstants.DISCOVERY_SOAP_BODY;
+import static com.things.smartlib.TronXConstants.DISCOVERY_SOAP_HEADER;
+import static com.things.smartlib.TronXConstants.ENVELOPE_END;
+import static com.things.smartlib.TronXConstants.SOAP_HEADER;
+
 /**
  * @author :       Ajit Gaikwad
  * @version :      V1.0
@@ -17,36 +22,19 @@ public class OnvifXMLBuilder {
     public static final String TAG = OnvifXMLBuilder.class.getSimpleName();
 
     public static String getSoapHeader() {
-        return "<?xml version=\"1.0\" encoding=\"utf-8\"?>" +
-                "<soap:Envelope " +
-                "xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" " +
-                "xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" " +
-                "xmlns:soap=\"http://www.w3.org/2003/05/soap-envelope\" >" +
-                "<soap:Body>";
+        return SOAP_HEADER;
     }
 
     public static String getEnvelopeEnd() {
-        return "</soap:Body></soap:Envelope>";
+        return ENVELOPE_END;
     }
 
     public static String getDiscoverySoapHeader() {
-        return "<?xml version=\"1.0\" encoding=\"utf-8\"?>" +
-                "<soap:Envelope " +
-                "xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" " +
-                "xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" " +
-                "xmlns:soap=\"http://www.w3.org/2003/05/soap-envelope\" " +
-                "xmlns:wsa=\"http://schemas.xmlsoap.org/ws/2004/08/addressing\" " +
-                "xmlns:tns=\"http://schemas.xmlsoap.org/ws/2005/04/discovery\">" +
-                "<soap:Header>" +
-                "<wsa:Action>http://schemas.xmlsoap.org/ws/2005/04/discovery/Probe</wsa:Action>" +
-                "<wsa:MessageID>urn:uuid:%s</wsa:MessageID>\n" +
-                "<wsa:To>urn:schemas-xmlsoap-org:ws:2005:04:discovery</wsa:To>\n" +
-                "</soap:Header>" +
-                "<soap:Body>";
+        return DISCOVERY_SOAP_HEADER;
     }
 
     public static String getDiscoverySoapBody() {
-        return "<tns:Probe/>";
+        return DISCOVERY_SOAP_BODY;
     }
 
 }
