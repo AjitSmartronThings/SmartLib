@@ -97,6 +97,29 @@ onvifManager.getMediaStreamURI(device, mediaProfiles.get(0), new OnvifMediaStrea
 });
 ```
 
+### PTZ
+Send request for Pan,Tilt and Zoom.This provides rotating IP Camera to its **Left,Right,Up** and **Down**.also
+provides support for **ZoomIn** and **ZoomOut**.You have to provide PTZ Type like **LEFT_MOVE,RIGHT_MOVE,UP_MOVE,DOWN_MOVE**
+for rotating respectively.also **ZOOM_IN** and **ZOOM_OUT** for zooming.
+
+```java
+onvifManager.sendPTZRequest(device, mediaProfile, PTZType.LEFT_MOVE, new OnvifPTZListener() {
+                                           @Override
+                                           public void onPTZReceived((@Nonnull OnvifDevice onvifDevice, boolean status) {
+                                             //return PTZ status
+    
+    }
+});
+```
+
+### Stop PTZ
+You can use stopPTZRequest for stopping rotation and zooming.
+
+```java
+//for Stopping Pan,Tilt and Zoom
+onvifManager.stopPTZRequest(device,mediaProfile);
+```
+
 ## Custom requests
 ---
 
