@@ -5,6 +5,10 @@ import com.things.smartlib.models.OnvifMediaProfile;
 import com.things.smartlib.models.OnvifType;
 import com.things.smartlib.models.PTZType;
 
+import java.util.Locale;
+
+import static com.things.smartlib.TronXConstants.REQUEST_PTZ;
+
 /**
  * The type Ptz request.
  *
@@ -60,19 +64,8 @@ public class PTZRequest implements OnvifRequest{
 
     @Override
     public String getXml() {
-        return "<ContinuousMove xmlns=\"http://www.onvif.org/ver20/ptz/wsdl\">"
-                + "<ProfileToken>" + onvifMediaProfile.getToken() + "</ProfileToken>"
-                + "<Velocity>"
-                + "<PanTilt x=\""
-                + Integer.toString(xMove)
-                + "\" y=\""
-                + Integer.toString(yMove)
-                + "\" xmlns=\"http://www.onvif.org/ver10/schema\"/>"
-                + "<Zoom x=\""
-                + Integer.toString(zoomVal)
-                + "\" xmlns=\"http://www.onvif.org/ver10/schema\"/>"
-                + "</Velocity>"
-                + "</ContinuousMove>";
+        String ptz = String.format(Locale.getDefault(), REQUEST_PTZ, onvifMediaProfile.getToken(),Integer.toString(xMove),Integer.toString(yMove),Integer.toString(zoomVal));
+        return ptz;
     }
 
     @Override

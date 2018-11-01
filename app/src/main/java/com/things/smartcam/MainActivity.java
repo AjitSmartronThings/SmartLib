@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity implements OnvifResponseList
         //Getting Device Services,Device Information,Device Profiles,Device Stream URI
         OnvifManager onvifManager=new OnvifManager();
         onvifManager.setOnvifResponseListener(this);
-        OnvifDevice onvifDevice=new OnvifDevice("192.168.0.2:36000","admin","admin");
+        OnvifDevice onvifDevice=new OnvifDevice("192.168.0.4:36000","admin","admin");
         onvifManager.getServices(onvifDevice, new OnvifServiceListener() {
             @Override
             public void onServicesReceived(OnvifDevice onvifDevice, OnvifServices path) {
@@ -60,11 +60,10 @@ public class MainActivity extends AppCompatActivity implements OnvifResponseList
                                                System.out.println(status);
                                                try {
                                                    Thread.sleep(10000);
-                                                   onvifManager.stopPTZRequest(device,mediaProfile);
+
                                                    onvifManager.sendPTZRequest(device, mediaProfile, PTZType.RIGHT_MOVE, new OnvifPTZListener() {
                                                        @Override
                                                        public void onPTZReceived(OnvifDevice onvifDevice, boolean status) {
-
                                                        }
                                                    });
                                                } catch (InterruptedException e) {
@@ -72,6 +71,8 @@ public class MainActivity extends AppCompatActivity implements OnvifResponseList
                                                }
                                            }
                                        });
+
+
 
 
                                             /*Thread.sleep(10000);

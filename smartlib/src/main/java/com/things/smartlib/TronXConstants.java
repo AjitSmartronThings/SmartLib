@@ -62,6 +62,22 @@ public class TronXConstants {
                                                           "</StreamSetup>" +
                                                           "<ProfileToken>%s</ProfileToken>" +
                                                           "</GetStreamUri>";
+    public static final String REQUEST_PTZ = "<ContinuousMove xmlns=\"http://www.onvif.org/ver20/ptz/wsdl\">" +
+                                             "<ProfileToken>%1$s</ProfileToken>" +
+                                             "<Velocity>" +
+                                             "<PanTilt x=\"%2$s\" y=\"%3$s\" xmlns=\"http://www.onvif.org/ver10/schema\"/>" +
+                                             "<Zoom x=\"%4$s\" xmlns=\"http://www.onvif.org/ver10/schema\"/>" +
+                                             "</Velocity>" +
+                                             "</ContinuousMove>";
+    public static final String REQUEST_PTZ_STOP = "<Stop xmlns=\"http://www.onvif.org/ver20/ptz/wsdl\">" +
+                                                  "<ProfileToken>%s</ProfileToken>" +
+                                                  "<PanTilt>" +
+                                                  "true" +
+                                                  "</PanTilt>" +
+                                                  "<Zoom>" +
+                                                  "true" +
+                                                  "</Zoom>" +
+                                                  "</Stop>";
     //XML Builder
     public static final String SOAP_HEADER = "<?xml version=\"1.0\" encoding=\"utf-8\"?>" +
                                              "<soap:Envelope " +
