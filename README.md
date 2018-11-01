@@ -112,6 +112,14 @@ onvifManager.sendPTZRequest(device, mediaProfile, PTZType.LEFT_MOVE, new OnvifPT
 });
 ```
 
+### STOP PTZ
+You can use stopPTZRequest for stopping rotation and zooming.
+
+```java
+//for Stopping Pan,Tilt and Zoom
+onvifManager.stopPTZRequest(device,mediaProfile);
+```
+
 ## Custom requests
 ---
 
