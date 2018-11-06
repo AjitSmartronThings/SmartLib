@@ -19,11 +19,25 @@ import com.things.smartlib.listeners.OnvifResponseListener;
 import com.things.smartlib.models.OnvifDevice;
 import com.things.smartlib.models.OnvifServices;
 import com.things.smartlib.models.OnvifType;
+import com.things.smartlib.parsers.DeviceDNSParser;
+import com.things.smartlib.parsers.DeviceDiscoverModeParser;
+import com.things.smartlib.parsers.DeviceHostnameParser;
+import com.things.smartlib.parsers.DeviceNWGatewayParser;
+import com.things.smartlib.parsers.DeviceNWInterfacesParser;
+import com.things.smartlib.parsers.DeviceNWProtocolsParser;
+import com.things.smartlib.parsers.DeviceScopesParser;
 import com.things.smartlib.parsers.GetDeviceInformationParser;
 import com.things.smartlib.parsers.GetMediaProfilesParser;
 import com.things.smartlib.parsers.GetMediaStreamParser;
 import com.things.smartlib.parsers.GetServicesParser;
+import com.things.smartlib.requests.GetDeviceDNS;
+import com.things.smartlib.requests.GetDeviceDiscoveryMode;
+import com.things.smartlib.requests.GetDeviceHostname;
 import com.things.smartlib.requests.GetDeviceInformationRequest;
+import com.things.smartlib.requests.GetDeviceNWGateway;
+import com.things.smartlib.requests.GetDeviceNWInterfaces;
+import com.things.smartlib.requests.GetDeviceNWProtocols;
+import com.things.smartlib.requests.GetDeviceScopes;
 import com.things.smartlib.requests.GetMediaProfilesRequest;
 import com.things.smartlib.requests.GetMediaStreamRequest;
 import com.things.smartlib.requests.GetServicesRequest;
@@ -194,6 +208,34 @@ public class OnvifExecutor {
                 PTZStopRequest ptzStopRequest = (PTZStopRequest) response.getOnvifRequest();
                 ptzStopRequest.getOnvifPTZListener().onPTZReceived(device,response.isSuccess());
                 break;*/
+            case DEVICE_DISCOVER_MODE:
+                GetDeviceDiscoveryMode deviceDiscoveryMode=(GetDeviceDiscoveryMode) response.getOnvifRequest();
+                deviceDiscoveryMode.getDeviceDiscoverModeListener().OnDeviceDiscoverModeReceived(device,new DeviceDiscoverModeParser().parse(response));
+                break;
+            case DEVICE_DNS:
+                GetDeviceDNS deviceDNS=(GetDeviceDNS) response.getOnvifRequest();
+                deviceDNS.getDeviceDNSListener().OnDNSReceived(device,new DeviceDNSParser().parse(response));
+                break;
+            case DEVICE_HOSTNAME:
+                GetDeviceHostname deviceHostname=(GetDeviceHostname) response.getOnvifRequest();
+                deviceHostname.getDeviceHostnameListener().OnHostnameReceived(device,new DeviceHostnameParser().parse(response));
+                break;
+            case DEVICE_NWGATEWAY:
+                GetDeviceNWGateway deviceNWGateway=(GetDeviceNWGateway) response.getOnvifRequest();
+                deviceNWGateway.getDeviceNWGatewayListener().OnNWGatewayReceived(device,new DeviceNWGatewayParser().parse(response));
+                break;
+            case DEVICE_NWINTERFACES:
+                GetDeviceNWInterfaces nwInterfaces=(GetDeviceNWInterfaces) response.getOnvifRequest();
+                nwInterfaces.getNwInterfacesListener().OnNWInterfacesReceived(device,new DeviceNWInterfacesParser().parse(response));
+                break;
+            case DEVICE_NWPROTOCOLS:
+                GetDeviceNWProtocols nwProtocols=(GetDeviceNWProtocols) response.getOnvifRequest();
+                nwProtocols.getNwProtoclosListener().OnNWProtocolsReceived(device,new DeviceNWProtocolsParser().parse(response));
+                break;
+            case DEVICE_SCOPES:
+                GetDeviceScopes deviceScopes = (GetDeviceScopes) response.getOnvifRequest();
+                deviceScopes.getScopesListener().onScopesReceived(device,new DeviceScopesParser().parse(response));
+                break;
             default:
                 onvifResponseListener.onResponse(device, response);
                 break;

@@ -1,5 +1,7 @@
 package com.things.smartlib.parsers;
 
+import android.util.Log;
+
 import com.things.smartlib.models.OnvifDeviceInformation;
 import com.things.smartlib.responses.OnvifResponse;
 
@@ -76,8 +78,9 @@ public class GetDeviceInformationParser extends OnvifParser<OnvifDeviceInformati
         } catch (XmlPullParserException | IOException e) {
             e.printStackTrace();
         }
-
+        Log.d(TAG, ""+deviceInformation);
         return deviceInformation;
+
     }
 
 }

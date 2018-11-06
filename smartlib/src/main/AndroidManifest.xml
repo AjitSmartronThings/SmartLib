@@ -1,2 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.things.smartlib" />
+    package="com.things.smartlib" >
+    <application>
+        <activity android:name=".player.TronXPlayer">
+
+        </activity>
+    </application>
+</manifest>

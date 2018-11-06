@@ -22,7 +22,14 @@ public enum OnvifType {
     GET_MEDIA_PROFILES(WSDL_MEDIA_PROFILE),
     GET_STREAM_URI(WSDL_MEDIA_URI),
     PTZ(WSDL_PTZ),
-    PTZ_STOP(WSDL_PTZ);
+    PTZ_STOP(WSDL_PTZ),
+    DEVICE_DISCOVER_MODE(""),
+    DEVICE_DNS(""),
+    DEVICE_HOSTNAME(""),
+    DEVICE_NWGATEWAY(""),
+    DEVICE_NWINTERFACES(""),
+    DEVICE_NWPROTOCOLS(""),
+    DEVICE_SCOPES("");
 
     public final String namespace;
 

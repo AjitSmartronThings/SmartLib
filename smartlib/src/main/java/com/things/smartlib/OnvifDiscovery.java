@@ -62,7 +62,7 @@ public class OnvifDiscovery {
      */
 //Constructors
     OnvifDiscovery() {
-        this(DiscoveryMode.ONVIF);
+        this(DiscoveryMode.UPNP);
     }
 
     /**
@@ -161,7 +161,7 @@ public class OnvifDiscovery {
                     OnvifPacket packet = createDiscoveryPacket();
                     byte[] data = packet.getData();
 
-                    int port = random.nextInt(20000) + 40000;
+                    int port = random.nextInt( 20000) + 40000;
 
                     DatagramSocket client = new DatagramSocket(port, address);
                     client.setBroadcast(true);
@@ -184,6 +184,7 @@ public class OnvifDiscovery {
                         @Override
                         public void onDevicesFound(List<Device> onvifDevices) {
                             devices.addAll(onvifDevices);
+                            discoveryListener.onDevicesFound(onvifDevices);
                         }
 
                         @Override

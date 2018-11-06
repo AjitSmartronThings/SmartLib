@@ -78,6 +78,28 @@ public class TronXConstants {
                                                   "true" +
                                                   "</Zoom>" +
                                                   "</Stop>";
+
+    public static final String DEVICE_DISCOVER_MODE = "<GetDiscoveryMode xmlns=\"http://www.onvif.org/ver10/device/wsdl\">"+
+                                                        "</GetDiscoveryMode>";
+
+    public static final String DEVICE_DNS = "<GetDNS xmlns=\"http://www.onvif.org/ver10/device/wsdl\">"+
+                                            "</GetDNS>";
+
+    public static final String DEVICE_HOSTNAME = "<GetHostname xmlns=\"http://www.onvif.org/ver10/device/wsdl\">"+
+                                                "</GetHostname>";
+
+    public static final String DEVICE_NWGATEWAY = "<GetNetworkDefaultGateway xmlns=\"http://www.onvif.org/ver10/device/wsdl\">"+
+                                                    "</GetNetworkDefaultGateway>";
+
+    public static final String DEVICE_NWINTERFACES = "<GetNetworkInterfaces xmlns=\"http://www.onvif.org/ver10/device/wsdl\">"+
+                                                     "</GetNetworkInterfaces>";
+
+    public static final String DEVICE_NWPROTOCOLS = "<GetNetworkProtocols xmlns=\"http://www.onvif.org/ver10/device/wsdl\">"+
+            "</GetNetworkProtocols>";
+
+    public static final String DEVICE_SCOPES = "<GetScopes xmlns=\"http://www.onvif.org/ver10/device/wsdl\">"+
+            "</GetScopes>";
+
     //XML Builder
     public static final String SOAP_HEADER = "<?xml version=\"1.0\" encoding=\"utf-8\"?>" +
                                              "<soap:Envelope " +

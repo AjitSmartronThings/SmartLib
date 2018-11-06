@@ -1,5 +1,6 @@
 package com.things.smartlib;
 
+import com.things.smartlib.listeners.DeviceDiscoverModeListener;
 import com.things.smartlib.listeners.OnvifDeviceInformationListener;
 import com.things.smartlib.listeners.OnvifMediaProfileListener;
 import com.things.smartlib.listeners.OnvifPTZListener;
@@ -9,6 +10,8 @@ import com.things.smartlib.listeners.OnvifStreamUriListener;
 import com.things.smartlib.models.OnvifDevice;
 import com.things.smartlib.models.OnvifMediaProfile;
 import com.things.smartlib.models.PTZType;
+import com.things.smartlib.parsers.GetDeviceInformationParser;
+import com.things.smartlib.requests.GetDeviceDiscoveryMode;
 import com.things.smartlib.requests.GetDeviceInformationRequest;
 import com.things.smartlib.requests.GetMediaProfilesRequest;
 import com.things.smartlib.requests.GetMediaStreamRequest;
@@ -78,6 +81,12 @@ public class OnvifManager implements OnvifResponseListener{
 
     public void sendOnvifRequest(OnvifDevice device, OnvifRequest request) {
         onvifExecutor.sendRequest(device, request);
+    }
+
+    public void getDeviceDiscoveryMode(OnvifDevice onvifDevice, DeviceDiscoverModeListener deviceDiscoverModeListener)
+    {
+        OnvifRequest onvifRequest=new GetDeviceDiscoveryMode(deviceDiscoverModeListener);
+        onvifExecutor.sendRequest(onvifDevice,onvifRequest);
     }
 
     public void setOnvifResponseListener(OnvifResponseListener onvifResponseListener) {

@@ -1,5 +1,7 @@
 package com.things.smartlib.parsers;
 
+import android.util.Log;
+
 import com.things.smartlib.DiscoveryMode;
 import com.things.smartlib.OnvifUtils;
 import com.things.smartlib.models.Device;
@@ -37,6 +39,8 @@ public class DiscoveryParser extends OnvifParser<List<Device>> {
     //Attributes
     private DiscoveryMode mode;
     private String hostName;
+    private String port;
+    private String deviceUrl;
 
     //Constructors
     public DiscoveryParser(DiscoveryMode mode) {
@@ -78,11 +82,14 @@ public class DiscoveryParser extends OnvifParser<List<Device>> {
 
                 eventType = getXmlPullParser().next();
             }
+            Log.d("", ""+devices);
+            return devices;
         } catch (XmlPullParserException | IOException e) {
             e.printStackTrace();
+        } catch (Exception e){
+            e.printStackTrace();
         }
-
-        return devices;
+        return null;
     }
 
     private Device parseUPnP(OnvifResponse response) {
@@ -98,7 +105,8 @@ public class DiscoveryParser extends OnvifParser<List<Device>> {
         List<OnvifDevice> devices = new ArrayList<>();
         String[] uris = uri.split("\\s+");
         for (String address : uris) {
-            OnvifDevice device = new OnvifDevice(getHostName());
+            //OnvifDevice device = new OnvifDevice(getHostName());
+            OnvifDevice device = new OnvifDevice(getDeviceUrl());
             device.addAddress(address);
             devices.add(device);
         }
@@ -123,5 +131,21 @@ public class DiscoveryParser extends OnvifParser<List<Device>> {
 
     public void setHostName(String hostName) {
         this.hostName = hostName;
+    }
+
+    public String getPort() {
+        return port;
+    }
+
+    public String getDeviceUrl() {
+        return deviceUrl;
+    }
+
+    public void setPort(String port) {
+        this.port = port;
+    }
+
+    public void setDeviceUrl() {
+        this.deviceUrl = getHostName() + ":" +getPort() ;
     }
 }

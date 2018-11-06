@@ -3,7 +3,7 @@ apply plugin: 'com.android.library'
 android {
     compileSdkVersion 28
 
-
+    useLibrary 'org.apache.http.legacy'
 
     defaultConfig {
         minSdkVersion 16
@@ -37,4 +37,5 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     implementation 'com.squareup.okhttp3:okhttp:3.11.0'
     implementation 'com.burgstaller:okhttp-digest:1.18'
+    implementation files('src/main/jniLibs/mediaplayersdk.jar')
 }
