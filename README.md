@@ -158,12 +158,12 @@ Download the latest JAR or grab via Maven:
 <dependency>
 	<groupId>com.github.AjitSmartronThings</groupId>
 	<artifactId>SmartLib</artifactId>
-	<version>v1.0.0</version>
+	<version>v1.0.1</version>
 </dependency>
 ```
 or Gradle:
 ```groovy
-implementation 'com.github.AjitSmartronThings:SmartLib:v1.0.0'
+implementation 'com.github.AjitSmartronThings:SmartLib:v1.0.1'
 ```
 
 License
