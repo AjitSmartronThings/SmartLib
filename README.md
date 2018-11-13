@@ -1,5 +1,7 @@
 # SmartLib - A Onvif Library
 ---
+[![](https://jitpack.io/v/AjitSmartronThings/SmartLib.svg)](https://jitpack.io/#AjitSmartronThings/SmartLib)
+
 **SmartLib** is useful for discovery IP cameras within networks which supports ONVIF and UPNP protocols.We can also add camera which supports these protocols.
 
 ## Features
