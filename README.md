@@ -1,5 +1,7 @@
 # SmartLib - A Onvif Library
 ---
+[![](https://jitpack.io/v/AjitSmartronThings/SmartLib.svg)](https://jitpack.io/#AjitSmartronThings/SmartLib)
+
 **SmartLib** is useful for discovery IP cameras within networks which supports ONVIF and UPNP protocols.We can also add camera which supports these protocols.
 
 ## Features
@@ -156,12 +158,12 @@ Download the latest JAR or grab via Maven:
 <dependency>
 	<groupId>com.github.AjitSmartronThings</groupId>
 	<artifactId>SmartLib</artifactId>
-	<version>v1.0.0</version>
+	<version>v1.0</version>
 </dependency>
 ```
 or Gradle:
 ```groovy
-implementation 'com.github.AjitSmartronThings:SmartLib:v1.0.0'
+implementation 'com.github.AjitSmartronThings:SmartLib:v1.0'
 ```
 
 License
