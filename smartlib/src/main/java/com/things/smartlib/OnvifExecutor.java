@@ -248,7 +248,10 @@ public class OnvifExecutor {
                 .addHeader("Content-Type", "text/xml; charset=utf-8")
                 .post(reqBody)
                 .build();
+
     }
+
+
 
     private String getUrlForRequest(OnvifDevice device, OnvifRequest request) {
         return device.getHost() + getPathForRequest(device, request);

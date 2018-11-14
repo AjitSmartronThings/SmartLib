@@ -47,6 +47,7 @@ public abstract class Device implements Comparable<Device>{
      */
     public Device(String host, String username, String password) {
         this.host = buildUrl(host);
+        //this.host = host;
         this.username = username;
         this.password = password;
     }

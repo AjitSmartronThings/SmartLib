@@ -146,6 +146,6 @@ public class DiscoveryParser extends OnvifParser<List<Device>> {
     }
 
     public void setDeviceUrl() {
-        this.deviceUrl = getHostName() + ":" +getPort() ;
+        this.deviceUrl = getHostName() + ":36000" ;
     }
 }

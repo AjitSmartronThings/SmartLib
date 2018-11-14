@@ -32,4 +32,6 @@ public interface DiscoveryCallback {
      * On discovery finished.
      */
     void onDiscoveryFinished();
+
+    void onDiscoveryTimeout();
 }

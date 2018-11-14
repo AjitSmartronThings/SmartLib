@@ -66,12 +66,14 @@ public class DiscoveryThread extends Thread {
                 server.receive(packet);
                 String response = new String(packet.getData(), 0, packet.getLength());
                 parser.setHostName(packet.getAddress().getHostName());
-                parser.setPort(String.valueOf(packet.getPort()));
+                //parser.setPort(String.valueOf(packet.getPort()));
                 parser.setDeviceUrl();
                 callback.onDevicesFound(parser.parse(new OnvifResponse(response)));
             }
 
         } catch (IOException ignored) {
+            System.out.print(ignored.getStackTrace());
+            callback.onDiscoveryTimeout();
         } finally {
             server.close();
             callback.onDiscoveryFinished();

@@ -27,4 +27,6 @@ public interface DiscoveryListener {
      * @param devices the devices
      */
     void onDevicesFound(List<Device> devices);
+
+    void onDiscoveryCompleted();
 }

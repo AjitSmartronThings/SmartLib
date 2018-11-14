@@ -62,7 +62,7 @@ public class OnvifDiscovery {
      */
 //Constructors
     OnvifDiscovery() {
-        this(DiscoveryMode.UPNP);
+        this(DiscoveryMode.ONVIF);
     }
 
     /**
@@ -185,11 +185,17 @@ public class OnvifDiscovery {
                         public void onDevicesFound(List<Device> onvifDevices) {
                             devices.addAll(onvifDevices);
                             discoveryListener.onDevicesFound(onvifDevices);
+                            //discoveryListener.onDiscoveryCompleted();
                         }
 
                         @Override
                         public void onDiscoveryFinished() {
                             latch.countDown();
+                        }
+
+                        @Override
+                        public void onDiscoveryTimeout() {
+                            discoveryListener.onDiscoveryCompleted();
                         }
 
                     }).start();
