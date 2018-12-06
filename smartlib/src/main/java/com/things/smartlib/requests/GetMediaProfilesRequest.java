@@ -1,5 +1,6 @@
 package com.things.smartlib.requests;
 
+import com.things.smartlib.listeners.DeviceMediaProfileListener;
 import com.things.smartlib.listeners.OnvifMediaProfileListener;
 import com.things.smartlib.models.OnvifType;
 
@@ -25,7 +26,8 @@ public class GetMediaProfilesRequest implements OnvifRequest {
     public static final String TAG = GetMediaProfilesRequest.class.getSimpleName();
 
     //Attributes
-    private final OnvifMediaProfileListener listener;
+    //private final OnvifMediaProfileListener listener;
+    private final DeviceMediaProfileListener listener;
 
     /**
      * Instantiates a new Get media profiles request.
@@ -33,7 +35,7 @@ public class GetMediaProfilesRequest implements OnvifRequest {
      * @param listener the listener
      */
 //Constructors
-    public GetMediaProfilesRequest(OnvifMediaProfileListener listener) {
+    public GetMediaProfilesRequest(DeviceMediaProfileListener listener) {
         super();
         this.listener = listener;
     }
@@ -45,7 +47,7 @@ public class GetMediaProfilesRequest implements OnvifRequest {
      *
      * @return the listener
      */
-    public OnvifMediaProfileListener getListener() {
+    public DeviceMediaProfileListener getListener() {
         return listener;
     }
 

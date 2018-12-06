@@ -1,0 +1,355 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_above="@+id/playerControls"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_marginLeft="2dp"
+            android:layout_marginRight="2dp"
+            android:layout_marginBottom="1dp"
+            android:id="@+id/playerRow0"
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2"
+            android:orientation="vertical" >
+
+            <veg.mediaplayer.sdk.MediaPlayer
+                android:layout_marginBottom="1dp"
+                android:id="@+id/playerView1"
+                android:layout_width="match_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                >
+            </veg.mediaplayer.sdk.MediaPlayer>
+
+            <veg.mediaplayer.sdk.MediaPlayer
+                android:id="@+id/playerView2"
+                android:layout_width="match_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                >
+            </veg.mediaplayer.sdk.MediaPlayer>
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:visibility="gone"
+            android:layout_marginLeft="2dp"
+            android:layout_marginRight="2dp"
+            android:layout_marginBottom="1dp"
+            android:id="@+id/playerRow1"
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.5"
+            android:orientation="horizontal" >
+
+            <veg.mediaplayer.sdk.MediaPlayer
+                android:layout_marginRight="1dp"
+                android:id="@+id/playerView3"
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
+                android:layout_weight="0.5"
+                >
+            </veg.mediaplayer.sdk.MediaPlayer>
+
+            <veg.mediaplayer.sdk.MediaPlayer
+                android:layout_marginLeft="1dp"
+                android:id="@+id/playerView4"
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
+                android:layout_weight="0.5"
+                >
+            </veg.mediaplayer.sdk.MediaPlayer>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:visibility="gone"
+            android:layout_marginLeft="2dp"
+            android:layout_marginRight="2dp"
+            android:layout_marginTop="1dp"
+            android:id="@+id/playerRow2"
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.5"
+            android:orientation="horizontal" >
+
+            <veg.mediaplayer.sdk.MediaPlayer
+                android:layout_marginRight="1dp"
+                android:id="@+id/playerView5"
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
+                android:layout_weight="0.5"
+                >
+            </veg.mediaplayer.sdk.MediaPlayer>
+
+            <veg.mediaplayer.sdk.MediaPlayer
+                android:layout_marginLeft="1dp"
+                android:id="@+id/playerView6"
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
+                android:layout_weight="0.5"
+                >
+            </veg.mediaplayer.sdk.MediaPlayer>
+
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:visibility="gone"
+            android:layout_marginLeft="2dp"
+            android:layout_marginRight="2dp"
+            android:layout_marginBottom="1dp"
+            android:id="@+id/playerRow3"
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2"
+            android:weightSum="6"
+            android:orientation="horizontal" >
+
+            <veg.mediaplayer.sdk.MediaPlayer
+                android:layout_marginRight="1dp"
+                android:id="@+id/playerView7"
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
+                android:layout_weight="2"
+                >
+            </veg.mediaplayer.sdk.MediaPlayer>
+
+            <veg.mediaplayer.sdk.MediaPlayer
+                android:layout_marginLeft="1dp"
+                android:layout_marginRight="1dp"
+                android:id="@+id/playerView8"
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
+                android:layout_weight="2"
+                >
+            </veg.mediaplayer.sdk.MediaPlayer>
+
+            <veg.mediaplayer.sdk.MediaPlayer
+
+                android:layout_marginLeft="1dp"
+                android:id="@+id/playerView9"
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
+                android:layout_weight="2"
+                >
+            </veg.mediaplayer.sdk.MediaPlayer>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:visibility="gone"
+            android:layout_marginLeft="2dp"
+            android:layout_marginRight="2dp"
+            android:layout_marginTop="1dp"
+            android:layout_marginBottom="1dp"
+            android:id="@+id/playerRow4"
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2"
+            android:orientation="horizontal" >
+
+            <veg.mediaplayer.sdk.MediaPlayer
+                android:layout_marginRight="1dp"
+                android:id="@+id/playerView10"
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
+                android:layout_weight="0.5"
+                >
+            </veg.mediaplayer.sdk.MediaPlayer>
+
+            <veg.mediaplayer.sdk.MediaPlayer
+                android:layout_marginLeft="1dp"
+                android:layout_marginRight="1dp"
+                android:id="@+id/playerView11"
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
+                android:layout_weight="0.5"
+                >
+            </veg.mediaplayer.sdk.MediaPlayer>
+
+            <veg.mediaplayer.sdk.MediaPlayer
+                android:layout_marginLeft="1dp"
+                android:id="@+id/playerView12"
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
+                android:layout_weight="0.5"
+                >
+            </veg.mediaplayer.sdk.MediaPlayer>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:visibility="gone"
+            android:layout_marginLeft="2dp"
+            android:layout_marginRight="2dp"
+            android:layout_marginTop="1dp"
+            android:id="@+id/playerRow5"
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2"
+            android:orientation="horizontal" >
+
+            <veg.mediaplayer.sdk.MediaPlayer
+                android:layout_marginRight="1dp"
+                android:id="@+id/playerView13"
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
+                android:layout_weight="0.5"
+                >
+            </veg.mediaplayer.sdk.MediaPlayer>
+
+            <veg.mediaplayer.sdk.MediaPlayer
+                android:layout_marginLeft="1dp"
+                android:layout_marginRight="1dp"
+                android:id="@+id/playerView14"
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
+                android:layout_weight="0.5"
+                >
+            </veg.mediaplayer.sdk.MediaPlayer>
+
+            <veg.mediaplayer.sdk.MediaPlayer
+                android:layout_marginLeft="1dp"
+                android:id="@+id/playerView15"
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
+                android:layout_weight="0.5"
+                >
+            </veg.mediaplayer.sdk.MediaPlayer>
+
+        </LinearLayout>
+
+
+    <HorizontalScrollView
+        android:id="@+id/playerControls"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    <RadioGroup
+        android:orientation="horizontal"
+        android:layout_gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+            <RadioButton
+                android:checked="false"
+                android:button="@null"
+                android:text="1"
+                android:textSize="20sp"
+                android:gravity="center"
+                android:layout_margin="10dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/rounded_circle_back"
+                />
+
+            <RadioButton
+                android:checked="false"
+                android:button="@null"
+                android:text="2"
+                android:textSize="20sp"
+                android:gravity="center"
+                android:layout_margin="10dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+
+                android:background="@drawable/rounded_circle_back"
+                />
+            <RadioButton
+                android:button="@null"
+                android:textSize="20sp"
+                android:gravity="center"
+                android:layout_margin="10dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/circle_in_circle"
+                />
+            <RadioButton
+                android:textColor="@android:color/white"
+                android:checked="true"
+                android:button="@null"
+                android:text="4"
+                android:textSize="20sp"
+                android:gravity="center"
+                android:layout_margin="10dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/rounded_circle_back"
+                />
+            <RadioButton
+                android:checked="false"
+                android:button="@null"
+                android:text="9"
+                android:textSize="20sp"
+                android:gravity="center"
+                android:layout_margin="10dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/rounded_circle_back"
+                />
+
+    </RadioGroup>
+
+    </HorizontalScrollView>
+
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_margin="10dp"
+            android:orientation="horizontal"
+            android:layout_gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                app:srcCompat="@drawable/ic_photo_camera_black_24dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp" />
+            <ImageView
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                app:srcCompat="@drawable/ic_photo_camera_black_24dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp" />
+            <ImageView
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                app:srcCompat="@drawable/ic_photo_camera_black_24dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp" />
+            <ImageView
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                app:srcCompat="@drawable/ic_photo_camera_black_24dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp" />
+            <ImageView
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                app:srcCompat="@drawable/ic_photo_camera_black_24dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp" />
+
+        </LinearLayout>
+
+    </HorizontalScrollView>
+
+    </LinearLayout>
+
+</LinearLayout>

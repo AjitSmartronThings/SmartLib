@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/actvity_back"
+    tools:context=".Add_Camera_Manually">
+
+    <LinearLayout
+        android:layout_margin="10dp"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <com.things.smartcam.CustomEditText
+        android:layout_marginBottom="5dp"
+        android:text="IP/Domain"
+        android:textSize="18sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/white_cornered_background"/>
+
+        <com.things.smartcam.CustomEditText
+            android:id="@+id/cameraName"
+            android:layout_marginBottom="5dp"
+            android:text="Cam 1"
+            android:textSize="18sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/white_cornered_background"/>
+
+        <com.things.smartcam.CustomEditText
+            android:id="@+id/cameraInternalUrl"
+            android:layout_marginBottom="5dp"
+            android:text="192.168.0.7"
+            android:textSize="18sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/white_cornered_background"/>
+
+        <com.things.smartcam.CustomEditText
+            android:id="@+id/cameraHttp"
+            android:layout_marginBottom="5dp"
+            android:text="36000"
+            android:textSize="18sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/white_cornered_background"/>
+
+        <com.things.smartcam.CustomEditText
+            android:id="@+id/cameraUsername"
+            android:layout_marginBottom="5dp"
+            android:text="admin"
+            android:textSize="18sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/white_cornered_background"/>
+
+        <com.things.smartcam.CustomEditText
+            android:id="@+id/cameraPassword"
+            android:layout_marginBottom="5dp"
+            android:inputType="textPassword"
+            android:text="admin"
+            android:textSize="18sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/white_cornered_background"/>
+
+        <com.things.smartcam.CustomEditText
+            android:background="@drawable/white_cornered_background"
+            android:layout_marginBottom="5dp"
+            android:text="1"
+            android:textSize="18sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <Button
+            android:id="@+id/addCamera"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="ADD"/>
+        <Button
+            android:id="@+id/seeCamera"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="See"/>
+
+    </LinearLayout>
+</RelativeLayout>

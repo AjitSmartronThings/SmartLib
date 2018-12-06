@@ -48,6 +48,9 @@ public class TronXConstants {
     public static final int PTZ_MOVE_MINUS = (-1);
     public static final int PTZ_MOVE_IDLE = 0;
     //XML Requests
+    public static final String REQUEST_CAPABILITIES = "<GetCapabilities xmlns=\"http://www.onvif.org/ver10/device/wsdl\">" +
+            "<Category>All</Category>" +
+            "</GetCapabilities>";
     public static final String REQUEST_SERVICE = "<GetServices xmlns=\"http://www.onvif.org/ver10/device/wsdl\">" +
                                                  "<IncludeCapability>false</IncludeCapability>" +
                                                  "</GetServices>";
@@ -69,6 +72,20 @@ public class TronXConstants {
                                              "<Zoom x=\"%4$s\" xmlns=\"http://www.onvif.org/ver10/schema\"/>" +
                                              "</Velocity>" +
                                              "</ContinuousMove>";
+    public static final String REQUEST_PTZ_ABSOLUTE = "<AbsoluteMove xmlns=\"http://www.onvif.org/ver20/ptz/wsdl\">" +
+            "<ProfileToken>%1$s</ProfileToken>" +
+            "<Position>" +
+            "<PanTilt x=\"%2$s\" y=\"%3$s\" xmlns=\"http://www.onvif.org/ver10/schema\"/>" +
+            "<Zoom x=\"%4$s\" xmlns=\"http://www.onvif.org/ver10/schema\"/>" +
+            "</Position>" +
+            "</AbsoluteMove>";
+    public static final String REQUEST_PTZ_RELATIVE = "<RelativeMove xmlns=\"http://www.onvif.org/ver20/ptz/wsdl\">" +
+            "<ProfileToken>%1$s</ProfileToken>" +
+            "<Translation>" +
+            "<PanTilt x=\"%2$s\" y=\"%3$s\" xmlns=\"http://www.onvif.org/ver10/schema\"/>" +
+            "<Zoom x=\"%4$s\" xmlns=\"http://www.onvif.org/ver10/schema\"/>" +
+            "</Translation>" +
+            "</RelativeMove>";
     public static final String REQUEST_PTZ_STOP = "<Stop xmlns=\"http://www.onvif.org/ver20/ptz/wsdl\">" +
                                                   "<ProfileToken>%s</ProfileToken>" +
                                                   "<PanTilt>" +
@@ -78,6 +95,11 @@ public class TronXConstants {
                                                   "true" +
                                                   "</Zoom>" +
                                                   "</Stop>";
+
+    public static final String REQUEST_PTZ_CONFIGURATIONS = "<GetConfigurations xmlns=\"http://www.onvif.org/ver20/ptz/wsdl\">" +
+            "</GetConfigurations>";
+    public static final String REQUEST_PTZ_NODES = "<GetNodes xmlns=\"http://www.onvif.org/ver20/ptz/wsdl\">" +
+            "</GetNodes>";
 
     public static final String DEVICE_DISCOVER_MODE = "<GetDiscoveryMode xmlns=\"http://www.onvif.org/ver10/device/wsdl\">"+
                                                         "</GetDiscoveryMode>";

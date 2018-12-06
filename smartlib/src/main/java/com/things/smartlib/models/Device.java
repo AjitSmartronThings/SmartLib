@@ -27,6 +27,7 @@ public abstract class Device implements Comparable<Device>{
     private String username;
     private String password;
     private boolean connected;
+    private String ipAddress;
 
     /**
      * Instantiates a new Device.
@@ -37,7 +38,6 @@ public abstract class Device implements Comparable<Device>{
         this(host,"","");
     }
 
-
     /**
      * Instantiates a new Device.
      *
@@ -45,9 +45,13 @@ public abstract class Device implements Comparable<Device>{
      * @param username the username
      * @param password the password
      */
+
+
+
     public Device(String host, String username, String password) {
-        this.host = buildUrl(host);
-        //this.host = host;
+        //this.host = buildUrl(host);
+        this.host = host;
+        //this.ipAddress = host.substring(host.indexOf("//") + 2, host.indexOf("/on"));
         this.username = username;
         this.password = password;
     }
@@ -69,6 +73,14 @@ public abstract class Device implements Comparable<Device>{
     public void setHost(String host) {
         this.host = host;
     }
+
+    public String getIpAddress() {
+        return ipAddress;
+    }
+
+   /* public void setIpAddress(String ipAddress) {
+        this.ipAddress = host.substring(host.indexOf("//") + 2, host.indexOf("/on"));
+    }*/
 
     /**
      * Gets username.

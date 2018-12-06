@@ -20,18 +20,26 @@ public enum PTZType {
      * Left move ptz type.
      */
     LEFT_MOVE(PTZ_MOVE_MINUS,PTZ_MOVE_IDLE,PTZ_MOVE_IDLE),//-1,0,0
+
+    LEFT_UP_MOVE(PTZ_MOVE_MINUS,PTZ_MOVE_PLUS,PTZ_MOVE_IDLE),//-1,1,0
     /**
      * Right move ptz type.
      */
     RIGHT_MOVE(PTZ_MOVE_PLUS,PTZ_MOVE_IDLE,PTZ_MOVE_IDLE),//1,0,0
+
+    RIGHT_UP_MOVE(PTZ_MOVE_PLUS,PTZ_MOVE_MINUS,PTZ_MOVE_IDLE),//1,-1,0
     /**
      * Up move ptz type.
      */
     UP_MOVE(PTZ_MOVE_IDLE,PTZ_MOVE_PLUS,PTZ_MOVE_IDLE),//0,1,0
+
+    UP_LEFT_MOVE(PTZ_MOVE_PLUS,PTZ_MOVE_PLUS,PTZ_MOVE_IDLE),//1,1,0
     /**
      * Down move ptz type.
      */
     DOWN_MOVE(PTZ_MOVE_IDLE,PTZ_MOVE_MINUS,PTZ_MOVE_IDLE),//0,-1,0
+
+    DOWN_RIGHT_MOVE(PTZ_MOVE_MINUS,PTZ_MOVE_MINUS,PTZ_MOVE_IDLE),//-1,-1,0
     /**
      * Zoom in ptz type.
      */

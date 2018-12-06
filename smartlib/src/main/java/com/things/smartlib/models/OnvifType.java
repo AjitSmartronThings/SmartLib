@@ -17,6 +17,7 @@ import static com.things.smartlib.TronXConstants.WSDL_SERVICE;
  */
 public enum OnvifType {
     CUSTOM(""),
+    GET_CAPABILITIES(WSDL_SERVICE),
     GET_SERVICES(WSDL_SERVICE),
     GET_DEVICE_INFORMATION(WSDL_DEVICE),
     GET_MEDIA_PROFILES(WSDL_MEDIA_PROFILE),
@@ -29,7 +30,9 @@ public enum OnvifType {
     DEVICE_NWGATEWAY(""),
     DEVICE_NWINTERFACES(""),
     DEVICE_NWPROTOCOLS(""),
-    DEVICE_SCOPES("");
+    DEVICE_SCOPES(""),
+    PTZ_CONFIGURATIONS(""),
+    PTZ_NODES("");
 
     public final String namespace;
 

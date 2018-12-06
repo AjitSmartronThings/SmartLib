@@ -2,50 +2,89 @@ package com.things.smartcam;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.media.AudioFormat;
+import android.media.AudioRecord;
+import android.media.MediaRecorder;
+import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatEditText;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 
 import com.things.smartlib.DiscoveryManager;
+import com.things.smartlib.FindDevicesThread;
 import com.things.smartlib.OnvifManager;
+import com.things.smartlib.listeners.DeviceMediaProfileListener;
 import com.things.smartlib.listeners.DiscoveryListener;
 import com.things.smartlib.listeners.OnvifDeviceInformationListener;
-import com.things.smartlib.listeners.OnvifMediaProfileListener;
+import com.things.smartlib.listeners.OnvifPTZListener;
 import com.things.smartlib.listeners.OnvifResponseListener;
 import com.things.smartlib.listeners.OnvifServiceListener;
 import com.things.smartlib.listeners.OnvifStreamUriListener;
 import com.things.smartlib.models.Device;
+import com.things.smartlib.models.DeviceMediaProfile;
 import com.things.smartlib.models.OnvifDevice;
 import com.things.smartlib.models.OnvifDeviceInformation;
-import com.things.smartlib.models.OnvifMediaProfile;
 import com.things.smartlib.models.OnvifServices;
+import com.things.smartlib.models.PTZMoveType;
+import com.things.smartlib.models.PTZType;
+import com.things.smartlib.player.TronXMultiPlayer;
 import com.things.smartlib.player.TronXPlayer;
 import com.things.smartlib.responses.OnvifResponse;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements OnvifResponseListener {
+public class MainActivity extends AppCompatActivity implements OnvifResponseListener,FindDevicesThread.FindDevicesListener {
 
 
     private static final String TAG = MainActivity.class.getSimpleName();
-    OnvifMediaProfile mediaProfile;
+    //OnvifMediaProfile mediaProfile;
+    DeviceMediaProfile mediaProfile;
     OnvifManager onvifManager;
     OnvifDevice onvifDevice;
     String profile,streamuri;
+    Spinner spinner;
     String devurl = null;
+    ProgressDialog pg;
 
     AppCompatEditText deviceUri,deviceuser,devicepassword;
-    AppCompatButton searchDevices,addDevice,getServices,getDeviceInformation,getProfiles,getStreamUri,play,multiPlayer;
+    AppCompatButton searchDevices,addDevice,getServices,getDeviceInformation,getProfiles,getStreamUri,play,multiPlayer,left,right,up,down,stop;
+
+    private ArrayList<Device> devices;
+    private int selectedIndex = -1;
+
+    ListView listView;
+
+    private DevicesAdapter adapter;
+
+    private int port=50005;
+    private int sampleRate = 8000; //44100;
+    private int channelConfig = AudioFormat.CHANNEL_IN_MONO;
+    private int audioFormat = AudioFormat.ENCODING_PCM_16BIT;
+    int minBufSize = AudioRecord.getMinBufferSize(sampleRate, channelConfig, audioFormat);
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        listView = (ListView) findViewById(R.id.listView1);
 
         deviceUri = (AppCompatEditText) findViewById(R.id.deviceUri);
         deviceuser = (AppCompatEditText) findViewById(R.id.deviceuser);
@@ -60,8 +99,30 @@ public class MainActivity extends AppCompatActivity implements OnvifResponseList
         play = (AppCompatButton) findViewById(R.id.play);
         multiPlayer = (AppCompatButton) findViewById(R.id.multiPlayer);
 
+        left = (AppCompatButton) findViewById(R.id.left);
+        right = (AppCompatButton) findViewById(R.id.right);
+        up = (AppCompatButton) findViewById(R.id.up);
+        down = (AppCompatButton) findViewById(R.id.down);
+        stop = (AppCompatButton) findViewById(R.id.stop);
+
         onvifManager = new OnvifManager();
         onvifManager.setOnvifResponseListener(this);
+
+        devices = new ArrayList<>();
+        adapter = new DevicesAdapter(this, devices);
+        listView.setAdapter(adapter);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                selectedIndex = position;
+                String ipAddress = devices.get(position).getHost();
+                devurl=ipAddress.substring(0, ipAddress.indexOf("/on"));
+                deviceUri.setText(devurl);
+                deviceuser.setText("admin");
+                devicepassword.setText("admin");
+                //new GetDeviceInfoThread(devices.get(position), MainActivity.this, MainActivity.this).start();
+            }
+        });
 
         searchDevices.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -115,7 +176,63 @@ public class MainActivity extends AppCompatActivity implements OnvifResponseList
         multiPlayer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                play();
+                multiPlay();
+            }
+        });
+
+        left.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onvifManager.sendPTZRequest(PTZMoveType.PTZ_ABSOLUTE,onvifDevice, mediaProfile, PTZType.LEFT_MOVE, new OnvifPTZListener() {
+                    @Override
+                    public void onPTZReceived(OnvifDevice onvifDevice, boolean status) {
+                        System.out.println(status);
+                    }
+                });
+            }
+        });
+
+        right.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onvifManager.sendPTZRequest(PTZMoveType.PTZ_RELATIVE,onvifDevice, mediaProfile, PTZType.RIGHT_MOVE, new OnvifPTZListener() {
+                    @Override
+                    public void onPTZReceived(OnvifDevice onvifDevice, boolean status) {
+                        System.out.println(status);
+                    }
+                });
+            }
+        });
+
+
+        up.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onvifManager.sendPTZRequest(PTZMoveType.PTZ_CONTINUOUS,onvifDevice, mediaProfile, PTZType.UP_MOVE, new OnvifPTZListener() {
+                    @Override
+                    public void onPTZReceived(OnvifDevice onvifDevice, boolean status) {
+                        System.out.println(status);
+                    }
+                });
+            }
+        });
+
+        down.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onvifManager.sendPTZRequest(PTZMoveType.PTZ_ABSOLUTE,onvifDevice, mediaProfile, PTZType.DOWN_MOVE, new OnvifPTZListener() {
+                    @Override
+                    public void onPTZReceived(OnvifDevice onvifDevice, boolean status) {
+                        System.out.println(status);
+                    }
+                });
+            }
+        });
+
+        stop.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onvifManager.stopPTZRequest(onvifDevice,mediaProfile);
             }
         });
 
@@ -250,12 +367,13 @@ public class MainActivity extends AppCompatActivity implements OnvifResponseList
         });
     }
 
-    private void searchDevices()
+   /* private void searchDevices()
     {
+
         ProgressDialog pg=new ProgressDialog(MainActivity.this);
         pg.show();
         DiscoveryManager manager = new DiscoveryManager();
-        manager.setDiscoveryTimeout(15000);
+        manager.setDiscoveryTimeout(20000);
         manager.discover(new DiscoveryListener() {
             @Override
             public void onDiscoveryStarted() {
@@ -276,15 +394,40 @@ public class MainActivity extends AppCompatActivity implements OnvifResponseList
             public void onDiscoveryCompleted() {
                 System.out.println("Discovery completed");
                 pg.dismiss();
+
+                devices.clear();
+                devices.addAll(devices);
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        adapter.notifyDataSetChanged();
+                    }
+                });
+
                 deviceUri.setText(devurl);
                 deviceuser.setText("admin");
                 devicepassword.setText("admin");
             }
+
         });
-    }
+    }*/
+   private void searchDevices()
+   {
+
+       pg=new ProgressDialog(MainActivity.this);
+       pg.show();
+       new FindDevicesThread(this, this).start();
+   }
 
     private void addDevice(){
-        onvifDevice = new OnvifDevice("192.168.0.5:36000", "admin", "admin");
+
+       if(devurl==null)
+       {
+           Toast.makeText(MainActivity.this, "Enter Device IP or Search for devices", Toast.LENGTH_SHORT).show();
+           return;
+       }
+
+        onvifDevice = new OnvifDevice(devurl, "admin", "admin");
         onvifManager.getServices(onvifDevice, new OnvifServiceListener() {
             @Override
             public void onServicesReceived(OnvifDevice onvifDevice, OnvifServices onvifServices) {
@@ -311,6 +454,13 @@ public class MainActivity extends AppCompatActivity implements OnvifResponseList
     }
 
     private void getServices() {
+
+       if(onvifDevice == null)
+       {
+           Toast.makeText(MainActivity.this, "Please add the Device first", Toast.LENGTH_SHORT).show();
+           return;
+       }
+
         onvifManager.getServices(onvifDevice, new OnvifServiceListener() {
             @Override
             public void onServicesReceived(OnvifDevice onvifDevice, OnvifServices onvifServices) {
@@ -322,6 +472,9 @@ public class MainActivity extends AppCompatActivity implements OnvifResponseList
                                     +"Profile : "+onvifServices.getProfilespath()+"\n"
                                     +"Stream : "+onvifServices.getStreamURIpath(), Toast.LENGTH_SHORT).show();
                         }
+
+
+                         
                     });
                 }
                 else
@@ -337,6 +490,11 @@ public class MainActivity extends AppCompatActivity implements OnvifResponseList
     }
 
     private void getDeviceInformation() {
+        if(onvifDevice == null)
+        {
+            Toast.makeText(MainActivity.this, "Please add the Device first", Toast.LENGTH_SHORT).show();
+            return;
+        }
         onvifManager.getDeviceInformation(onvifDevice, new OnvifDeviceInformationListener() {
             @Override
             public void onDeviceInformationReceived(OnvifDevice onvifDevice, OnvifDeviceInformation onvifDeviceInformation) {
@@ -365,7 +523,36 @@ public class MainActivity extends AppCompatActivity implements OnvifResponseList
     }
 
     private void getProfiles() {
-        onvifManager.getMediaProfiles(onvifDevice, new OnvifMediaProfileListener() {
+
+        if(onvifDevice == null)
+        {
+            Toast.makeText(MainActivity.this, "Please add the Device first", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        onvifManager.getMediaProfiles(onvifDevice, new DeviceMediaProfileListener() {
+            @Override
+            public void onMediaProfileReceived(OnvifDevice onvifDevice, List<DeviceMediaProfile> mediaProfiles) {
+                if (mediaProfiles != null) {
+                    mediaProfile=mediaProfiles.get(0);
+                    MainActivity.this.runOnUiThread(new Runnable() {
+                        public void run() {
+                            Toast.makeText(MainActivity.this,""+mediaProfiles.get(0).getToken()+"\n"+mediaProfiles.get(1).getToken(), Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
+                else
+                {
+                    MainActivity.this.runOnUiThread(new Runnable() {
+                        public void run() {
+                            Toast.makeText(MainActivity.this, "Profiles Not found", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
+            }
+        });
+
+        /*onvifManager.getMediaProfiles(onvifDevice, new OnvifMediaProfileListener() {
             @Override
             public void onMediaProfileReceived(OnvifDevice onvifDevice, List<OnvifMediaProfile> list) {
                 mediaProfile=list.get(0);
@@ -385,19 +572,27 @@ public class MainActivity extends AppCompatActivity implements OnvifResponseList
                     });
                 }
             }
-        });
+        });*/
     }
 
     private void getStreamUri() {
+
+        if(onvifDevice == null)
+        {
+            Toast.makeText(MainActivity.this, "Please add the Device first", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         onvifManager.getMediaStreamURI(onvifDevice, mediaProfile, new OnvifStreamUriListener() {
             @Override
-            public void onvifStreamUriReceived(OnvifDevice onvifDevice, OnvifMediaProfile onvifMediaProfile, String s) {
+            public void onvifStreamUriReceived(OnvifDevice onvifDevice, DeviceMediaProfile onvifMediaProfile, String s) {
                 if (s != null) {
                     profile = onvifMediaProfile.getName();
                     streamuri = s;
                     MainActivity.this.runOnUiThread(new Runnable() {
                         public void run() {
                             Toast.makeText(MainActivity.this,"Stream URI ::"+s, Toast.LENGTH_SHORT).show();
+                            play();
                         }
                     });
                 }
@@ -414,6 +609,11 @@ public class MainActivity extends AppCompatActivity implements OnvifResponseList
     }
 
     private void play() {
+        if(onvifDevice == null)
+        {
+            Toast.makeText(MainActivity.this, "Please add the Device first", Toast.LENGTH_SHORT).show();
+            return;
+        }
         Intent intent = new Intent(MainActivity.this, TronXPlayer.class);
         Bundle bundle = new Bundle();
         bundle.putString("streamUri", streamuri);
@@ -421,6 +621,26 @@ public class MainActivity extends AppCompatActivity implements OnvifResponseList
         intent.putExtras(bundle);
         startActivity(intent);
     }
+
+    private void multiPlay() {
+        Intent intent = new Intent(MainActivity.this, TronXMultiPlayer.class);
+        startActivity(intent);
+    }
+
+
+    @Override
+    public void searchResult(ArrayList<Device> devices) {
+        this.devices.clear();
+        this.devices.addAll(devices);
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                pg.dismiss();
+                adapter.notifyDataSetChanged();
+            }
+        });
+    }
+
 
 
 }

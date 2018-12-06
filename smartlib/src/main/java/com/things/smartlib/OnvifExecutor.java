@@ -19,9 +19,12 @@ import com.things.smartlib.listeners.OnvifResponseListener;
 import com.things.smartlib.models.OnvifDevice;
 import com.things.smartlib.models.OnvifServices;
 import com.things.smartlib.models.OnvifType;
+import com.things.smartlib.models.PTZConfigurations;
+import com.things.smartlib.parsers.DeviceCapabilitiesParser;
 import com.things.smartlib.parsers.DeviceDNSParser;
 import com.things.smartlib.parsers.DeviceDiscoverModeParser;
 import com.things.smartlib.parsers.DeviceHostnameParser;
+import com.things.smartlib.parsers.DeviceMediaProfileParser;
 import com.things.smartlib.parsers.DeviceNWGatewayParser;
 import com.things.smartlib.parsers.DeviceNWInterfacesParser;
 import com.things.smartlib.parsers.DeviceNWProtocolsParser;
@@ -30,6 +33,8 @@ import com.things.smartlib.parsers.GetDeviceInformationParser;
 import com.things.smartlib.parsers.GetMediaProfilesParser;
 import com.things.smartlib.parsers.GetMediaStreamParser;
 import com.things.smartlib.parsers.GetServicesParser;
+import com.things.smartlib.parsers.PTZConfigurationsParser;
+import com.things.smartlib.requests.GetDeviceCapabilities;
 import com.things.smartlib.requests.GetDeviceDNS;
 import com.things.smartlib.requests.GetDeviceDiscoveryMode;
 import com.things.smartlib.requests.GetDeviceHostname;
@@ -40,6 +45,8 @@ import com.things.smartlib.requests.GetDeviceNWProtocols;
 import com.things.smartlib.requests.GetDeviceScopes;
 import com.things.smartlib.requests.GetMediaProfilesRequest;
 import com.things.smartlib.requests.GetMediaStreamRequest;
+import com.things.smartlib.requests.GetPTZConfigurations;
+import com.things.smartlib.requests.GetPTZNodes;
 import com.things.smartlib.requests.GetServicesRequest;
 import com.things.smartlib.requests.OnvifRequest;
 import com.things.smartlib.requests.PTZRequest;
@@ -182,6 +189,10 @@ public class OnvifExecutor {
 
     private void parseResponse(OnvifDevice device, OnvifResponse response) {
         switch (response.getOnvifRequest().getType()) {
+            case GET_CAPABILITIES:
+                ((GetDeviceCapabilities) response.getOnvifRequest()).getDeviceCapabilitiesListener().onCapabilitiesReceived(device,
+                        new DeviceCapabilitiesParser().parse(response));
+                break;
             case GET_SERVICES:
                 OnvifServices path = new GetServicesParser().parse(response);
                 device.setPath(path);
@@ -192,8 +203,10 @@ public class OnvifExecutor {
                         new GetDeviceInformationParser().parse(response));
                 break;
             case GET_MEDIA_PROFILES:
+                //((GetMediaProfilesRequest) response.getOnvifRequest()).getListener().onMediaProfileReceived(device,
+                    //new GetMediaProfilesParser().parse(response));
                 ((GetMediaProfilesRequest) response.getOnvifRequest()).getListener().onMediaProfileReceived(device,
-                        new GetMediaProfilesParser().parse(response));
+                        new DeviceMediaProfileParser().parse(response));
                 break;
             case GET_STREAM_URI:
                 GetMediaStreamRequest streamRequest = (GetMediaStreamRequest) response.getOnvifRequest();
@@ -236,6 +249,14 @@ public class OnvifExecutor {
                 GetDeviceScopes deviceScopes = (GetDeviceScopes) response.getOnvifRequest();
                 deviceScopes.getScopesListener().onScopesReceived(device,new DeviceScopesParser().parse(response));
                 break;
+            case PTZ_CONFIGURATIONS:
+                GetPTZConfigurations ptzConfigurations = (GetPTZConfigurations) response.getOnvifRequest();
+                ptzConfigurations.getPtzConfigurationsListener().onPTZConfigurationsReceived(device,new PTZConfigurationsParser().parse(response));
+                break;
+            case PTZ_NODES:
+                GetPTZNodes ptzNodes = (GetPTZNodes) response.getOnvifRequest();
+                ptzNodes.getPtzConfigurationsListener().onPTZConfigurationsReceived(device,new PTZConfigurationsParser().parse(response));
+                break;
             default:
                 onvifResponseListener.onResponse(device, response);
                 break;
@@ -254,7 +275,8 @@ public class OnvifExecutor {
 
 
     private String getUrlForRequest(OnvifDevice device, OnvifRequest request) {
-        return device.getHost() + getPathForRequest(device, request);
+        String requestUrl = device.getHost();
+        return requestUrl + getPathForRequest(device, request);
     }
 
     private String getPathForRequest(OnvifDevice device, OnvifRequest request) {

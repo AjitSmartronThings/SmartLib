@@ -19,7 +19,17 @@ import java.io.StringReader;
  * @date :         11/6/2018
  * @see <a href="https://smartron.com/things.html">TThings a Smartron Company</a>
  */
-public class DeviceNWGatewayParser extends OnvifParser<DeviceNWGateway>{
+public class
+
+
+
+
+
+
+
+
+
+DeviceNWGatewayParser extends OnvifParser<DeviceNWGateway>{
 
     private static final String TAG = DeviceNWGatewayParser.class.getSimpleName();
     private static final String KEY_NWGATEWAY_ADDRESS = "IPv4Address";

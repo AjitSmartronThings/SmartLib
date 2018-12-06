@@ -1,5 +1,6 @@
 package com.things.smartlib.listeners;
 
+import com.things.smartlib.models.DeviceMediaProfile;
 import com.things.smartlib.models.OnvifDevice;
 import com.things.smartlib.models.OnvifMediaProfile;
 
@@ -22,5 +23,5 @@ public interface OnvifStreamUriListener {
      * @param onvifMediaProfile the onvif media profile
      * @param uri               the uri
      */
-    void onvifStreamUriReceived(OnvifDevice onvifDevice, OnvifMediaProfile onvifMediaProfile, String uri);
+    void onvifStreamUriReceived(OnvifDevice onvifDevice, DeviceMediaProfile onvifMediaProfile, String uri);
 }

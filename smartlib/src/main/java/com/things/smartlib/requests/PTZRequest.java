@@ -1,13 +1,19 @@
 package com.things.smartlib.requests;
 
+import android.widget.Switch;
+
 import com.things.smartlib.listeners.OnvifPTZListener;
+import com.things.smartlib.models.DeviceMediaProfile;
 import com.things.smartlib.models.OnvifMediaProfile;
 import com.things.smartlib.models.OnvifType;
+import com.things.smartlib.models.PTZMoveType;
 import com.things.smartlib.models.PTZType;
 
 import java.util.Locale;
 
 import static com.things.smartlib.TronXConstants.REQUEST_PTZ;
+import static com.things.smartlib.TronXConstants.REQUEST_PTZ_ABSOLUTE;
+import static com.things.smartlib.TronXConstants.REQUEST_PTZ_RELATIVE;
 
 /**
  * The type Ptz request.
@@ -24,9 +30,10 @@ public class PTZRequest implements OnvifRequest{
 
     private static final String TAG = PTZRequest.class.getSimpleName();
 
-    private final OnvifMediaProfile onvifMediaProfile;
+    private final DeviceMediaProfile onvifMediaProfile;
     private final int xMove,yMove,zoomVal;
     private final OnvifPTZListener onvifPTZListener;
+    private String moveType;
 
     /**
      * Instantiates a new Ptz request.
@@ -35,13 +42,28 @@ public class PTZRequest implements OnvifRequest{
      * @param ptzType           the ptz type
      * @param onvifPTZListener  the onvif ptz listener
      */
-    public PTZRequest(OnvifMediaProfile onvifMediaProfile, PTZType ptzType, OnvifPTZListener onvifPTZListener) {
+    public PTZRequest(PTZMoveType ptzMoveType,DeviceMediaProfile onvifMediaProfile, PTZType ptzType, OnvifPTZListener onvifPTZListener) {
         super();
         this.onvifMediaProfile = onvifMediaProfile;
         this.xMove=ptzType.x;
         this.yMove=ptzType.y;
         this.zoomVal=ptzType.z;
         this.onvifPTZListener = onvifPTZListener;
+        switch(ptzMoveType)
+        {
+            case PTZ_ABSOLUTE:
+                this.moveType = REQUEST_PTZ_ABSOLUTE;
+                break;
+            case PTZ_RELATIVE:
+                this.moveType = REQUEST_PTZ_RELATIVE;
+                break;
+            case PTZ_CONTINUOUS:
+                this.moveType = REQUEST_PTZ;
+                break;
+                default:
+                    this.moveType = REQUEST_PTZ;
+        }
+
     }
 
     /**
@@ -49,7 +71,7 @@ public class PTZRequest implements OnvifRequest{
      *
      * @return the onvif media profile
      */
-    public OnvifMediaProfile getOnvifMediaProfile() {
+    public DeviceMediaProfile getOnvifMediaProfile() {
         return onvifMediaProfile;
     }
 
@@ -64,7 +86,7 @@ public class PTZRequest implements OnvifRequest{
 
     @Override
     public String getXml() {
-        String ptz = String.format(Locale.getDefault(), REQUEST_PTZ, onvifMediaProfile.getToken(),Integer.toString(xMove),Integer.toString(yMove),Integer.toString(zoomVal));
+        String ptz = String.format(Locale.getDefault(), moveType, onvifMediaProfile.getToken(),Integer.toString(xMove),Integer.toString(yMove),Integer.toString(zoomVal));
         return ptz;
     }
 

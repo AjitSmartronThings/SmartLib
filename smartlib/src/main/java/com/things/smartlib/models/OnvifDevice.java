@@ -1,5 +1,6 @@
 package com.things.smartlib.models;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,7 +15,7 @@ import java.util.List;
  * @date :         10/24/2018
  * @see <a href="https://smartron.com/things.html">TThings a Smartron Company</a>
  */
-public class OnvifDevice extends Device{
+public class OnvifDevice extends Device {
 
     /**
      * The constant TAG.
@@ -27,6 +28,8 @@ public class OnvifDevice extends Device{
 //Attributes
     OnvifServices path;
     private List<String> addresses;
+
+    private ArrayList<DeviceMediaProfile> profiles;
 
     /**
      * Instantiates a new Onvif device.
@@ -48,6 +51,7 @@ public class OnvifDevice extends Device{
         super(host, username, password);
         path = new OnvifServices();
         addresses = new ArrayList<>();
+        profiles = new ArrayList<>();
     }
 
     /**
@@ -93,6 +97,14 @@ public class OnvifDevice extends Device{
      */
     public void setAddresses(List<String> addresses) {
         this.addresses = addresses;
+    }
+
+    public ArrayList<DeviceMediaProfile> getProfiles() {
+        return profiles;
+    }
+
+    public void addProfiles(List<DeviceMediaProfile> profiles) {
+        this.profiles.addAll(profiles);
     }
 
     @Override

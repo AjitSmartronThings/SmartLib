@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">SmartCam</string>
+    <string name="spinner_title">Cameras</string>
+    <string name="title_activity_lan_search">LanSearch</string>
+    <string name="title_activity_all_cameras">AllCameras</string>
+
+    <string name="product_name">Product name</string>
+    <string name="enter_name">Enter name</string>
+    <string name="enter_quantity">Enter quantity</string>
 </resources>

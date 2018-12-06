@@ -1,14 +1,17 @@
 package com.things.smartlib;
 
 import com.things.smartlib.listeners.DeviceDiscoverModeListener;
+import com.things.smartlib.listeners.DeviceMediaProfileListener;
 import com.things.smartlib.listeners.OnvifDeviceInformationListener;
 import com.things.smartlib.listeners.OnvifMediaProfileListener;
 import com.things.smartlib.listeners.OnvifPTZListener;
 import com.things.smartlib.listeners.OnvifResponseListener;
 import com.things.smartlib.listeners.OnvifServiceListener;
 import com.things.smartlib.listeners.OnvifStreamUriListener;
+import com.things.smartlib.models.DeviceMediaProfile;
 import com.things.smartlib.models.OnvifDevice;
 import com.things.smartlib.models.OnvifMediaProfile;
+import com.things.smartlib.models.PTZMoveType;
 import com.things.smartlib.models.PTZType;
 import com.things.smartlib.parsers.GetDeviceInformationParser;
 import com.things.smartlib.requests.GetDeviceDiscoveryMode;
@@ -56,24 +59,24 @@ public class OnvifManager implements OnvifResponseListener{
         onvifExecutor.sendRequest(device, request);
     }
 
-    public void getMediaProfiles(OnvifDevice device, OnvifMediaProfileListener listener) {
+    public void getMediaProfiles(OnvifDevice device, DeviceMediaProfileListener listener) {
         OnvifRequest request;
         request = new GetMediaProfilesRequest(listener);
         onvifExecutor.sendRequest(device, request);
     }
 
-    public void getMediaStreamURI(OnvifDevice device, OnvifMediaProfile profile, OnvifStreamUriListener listener) {
+    public void getMediaStreamURI(OnvifDevice device, DeviceMediaProfile profile, OnvifStreamUriListener listener) {
         OnvifRequest request = new GetMediaStreamRequest(profile, listener);
         onvifExecutor.sendRequest(device, request);
     }
 
-    public void sendPTZRequest(OnvifDevice onvifDevice, OnvifMediaProfile onvifMediaProfile, PTZType ptzType, OnvifPTZListener onvifPTZListener)
+    public void sendPTZRequest(PTZMoveType ptzMoveType,OnvifDevice onvifDevice, DeviceMediaProfile onvifMediaProfile, PTZType ptzType, OnvifPTZListener onvifPTZListener)
     {
-        OnvifRequest request = new PTZRequest(onvifMediaProfile,ptzType,onvifPTZListener);
+        OnvifRequest request = new PTZRequest(ptzMoveType,onvifMediaProfile,ptzType,onvifPTZListener);
         onvifExecutor.sendRequest(onvifDevice,request);
     }
 
-    public void stopPTZRequest(OnvifDevice onvifDevice, OnvifMediaProfile onvifMediaProfile)
+    public void stopPTZRequest(OnvifDevice onvifDevice, DeviceMediaProfile onvifMediaProfile)
     {
         OnvifRequest request = new PTZStopRequest(onvifMediaProfile);
         onvifExecutor.sendRequest(onvifDevice,request);

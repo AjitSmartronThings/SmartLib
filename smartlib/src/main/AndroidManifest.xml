@@ -4,5 +4,8 @@
         <activity android:name=".player.TronXPlayer">
 
         </activity>
+        <activity android:name=".player.TronXMultiPlayer">
+
+        </activity>
     </application>
 </manifest>

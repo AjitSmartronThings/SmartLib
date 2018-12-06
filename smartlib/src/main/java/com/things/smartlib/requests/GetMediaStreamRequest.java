@@ -2,6 +2,7 @@ package com.things.smartlib.requests;
 
 import com.things.smartlib.OnvifXMLBuilder;
 import com.things.smartlib.listeners.OnvifStreamUriListener;
+import com.things.smartlib.models.DeviceMediaProfile;
 import com.things.smartlib.models.OnvifMediaProfile;
 import com.things.smartlib.models.OnvifType;
 
@@ -29,7 +30,7 @@ public class GetMediaStreamRequest implements OnvifRequest {
     public static final String TAG = GetMediaStreamRequest.class.getSimpleName();
 
     //Attributes
-    private final OnvifMediaProfile mediaProfile;
+    private final DeviceMediaProfile mediaProfile;
     private final OnvifStreamUriListener listener;
 
     /**
@@ -39,7 +40,7 @@ public class GetMediaStreamRequest implements OnvifRequest {
      * @param listener     the listener
      */
 //Constructors
-    public GetMediaStreamRequest(OnvifMediaProfile mediaProfile, OnvifStreamUriListener listener) {
+    public GetMediaStreamRequest(DeviceMediaProfile mediaProfile, OnvifStreamUriListener listener) {
         super();
         this.mediaProfile = mediaProfile;
         this.listener = listener;
@@ -52,7 +53,7 @@ public class GetMediaStreamRequest implements OnvifRequest {
      *
      * @return the media profile
      */
-    public OnvifMediaProfile getMediaProfile() {
+    public DeviceMediaProfile getMediaProfile() {
         return mediaProfile;
     }
 

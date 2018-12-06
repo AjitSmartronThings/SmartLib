@@ -1,5 +1,6 @@
 package com.things.smartlib.requests;
 
+import com.things.smartlib.models.DeviceMediaProfile;
 import com.things.smartlib.models.OnvifMediaProfile;
 import com.things.smartlib.models.OnvifType;
 
@@ -24,14 +25,14 @@ PTZStopRequest implements OnvifRequest{
 
     private static final String TAG = PTZStopRequest.class.getSimpleName();
 
-    private final  OnvifMediaProfile mediaProfile;
+    private final  DeviceMediaProfile mediaProfile;
 
     /**
      * Instantiates a new Ptz stop request.
      *
      * @param mediaProfile the media profile
      */
-    public PTZStopRequest(OnvifMediaProfile mediaProfile) {
+    public PTZStopRequest(DeviceMediaProfile mediaProfile) {
         super();
         this.mediaProfile = mediaProfile;
     }
@@ -41,7 +42,7 @@ PTZStopRequest implements OnvifRequest{
      *
      * @return the media profile
      */
-    public OnvifMediaProfile getMediaProfile() {
+    public DeviceMediaProfile getMediaProfile() {
         return mediaProfile;
     }
 

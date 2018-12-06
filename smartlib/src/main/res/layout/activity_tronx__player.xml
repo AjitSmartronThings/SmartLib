@@ -21,4 +21,40 @@
 
     </veg.mediaplayer.sdk.MediaPlayer>
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <Button
+        android:layout_alignParentBottom="true"
+        android:layout_toLeftOf="@+id/Down"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Left"
+        android:id="@+id/Left"/>
+
+    <Button
+        android:layout_toRightOf="@+id/Down"
+        android:layout_alignBottom="@+id/Left"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Right"
+        android:id="@+id/Right"/>
+
+    <Button
+        android:layout_centerHorizontal="true"
+        android:layout_above="@+id/Down"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Top"
+        android:id="@+id/Top"/>
+
+    <Button
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Down"
+        android:id="@+id/Down"/>
+    </RelativeLayout>
 </FrameLayout>

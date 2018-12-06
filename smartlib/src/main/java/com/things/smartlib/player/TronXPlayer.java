@@ -24,7 +24,13 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.things.smartlib.OnvifManager;
 import com.things.smartlib.R;
+import com.things.smartlib.listeners.OnvifPTZListener;
+import com.things.smartlib.models.DeviceMediaProfile;
+import com.things.smartlib.models.OnvifDevice;
+import com.things.smartlib.models.PTZMoveType;
+import com.things.smartlib.models.PTZType;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -98,6 +104,12 @@ public class TronXPlayer extends AppCompatActivity {
     boolean recording30sec = false;
     String[] streamUriArr, resolutionArr,profileArr;
 
+    OnvifManager onvifManager;
+
+    OnvifDevice onvifDevice;
+
+    DeviceMediaProfile mediaProfile;
+
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
@@ -113,6 +125,7 @@ public class TronXPlayer extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tronx__player);
+        onvifManager = new OnvifManager();
         findViews();
         selectResolution();
         play();
@@ -134,11 +147,11 @@ public class TronXPlayer extends AppCompatActivity {
         player1 = (MediaPlayer)findViewById(R.id.playerView1);
         loaderIndicator1 = (ProgressBar)findViewById(R.id.loaderIndicator1);
         Player1CallBacks = new PlayerCallBacks(this, player1);
-       /* Top = (Button)findViewById(R.id.Top);
+       Top = (Button)findViewById(R.id.Top);
         Down = (Button)findViewById(R.id.Down);
         Left = (Button)findViewById(R.id.Left);
         Right = (Button)findViewById(R.id.Right);
-        ZoomIn = (Button)findViewById(R.id.ZoomIn);
+     /*   ZoomIn = (Button)findViewById(R.id.ZoomIn);
         ZoomOut = (Button)findViewById(R.id.ZoomOut);
         record = (ImageButton)findViewById(R.id.record);
         record.setColorFilter(getApplicationContext().getResources().getColor(R.color.white));
@@ -152,6 +165,9 @@ public class TronXPlayer extends AppCompatActivity {
     }
 
     private void selectResolution(){
+
+        onvifDevice = (OnvifDevice) getIntent().getSerializableExtra("obj");
+        mediaProfile = (DeviceMediaProfile) getIntent().getSerializableExtra("media");
         Bundle bundle = this.getIntent().getExtras();
         //streamUriArr = Arrays.copyOf(bundle.getStringArray("streamUriArr"), bundle.getStringArray("streamUriArr").length);
         //resolutionArr = Arrays.copyOf(bundle.getStringArray("resolutionArr"), bundle.getStringArray("resolutionArr").length);
@@ -266,22 +282,23 @@ public class TronXPlayer extends AppCompatActivity {
 
 
 
-    /*private void btnAction(){
+    private void btnAction(){
         Top.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 if(event.getAction() == MotionEvent.ACTION_DOWN){
                     //Top.setBackgroundResource(R.drawable.circle2);
-                    x = 0;
-                    y = (1);
-                    z = 0;
-                    PTZ top_continuousMove = new PTZ();
-                    top_continuousMove.execute("continuousMove");
+                    onvifManager.sendPTZRequest(PTZMoveType.PTZ_CONTINUOUS,onvifDevice, mediaProfile, PTZType.UP_MOVE, new OnvifPTZListener() {
+                        @Override
+                        public void onPTZReceived(OnvifDevice onvifDevice, boolean status) {
+                            System.out.println(status);
+                        }
+                    });
                 }
                 if(event.getAction() == MotionEvent.ACTION_UP){
                     //Top.setBackgroundResource(R.drawable.circle);
-                    PTZ stop_continuousMove = new PTZ();
-                    stop_continuousMove.execute("stop");
+                    //PTZ stop_continuousMove = new PTZ();
+                    //stop_continuousMove.execute("stop");
                 }
                 return false;
             }
@@ -295,13 +312,13 @@ public class TronXPlayer extends AppCompatActivity {
                     x = 0;
                     y = (-1);
                     z = 0;
-                    PTZ top_continuousMove = new PTZ();
-                    top_continuousMove.execute("continuousMove");
+                    //PTZ top_continuousMove = new PTZ();
+                    //top_continuousMove.execute("continuousMove");
                 }
                 if(event.getAction() == MotionEvent.ACTION_UP){
                     //Down.setBackgroundResource(R.drawable.circle);
-                    PTZ stop_continuousMove = new PTZ();
-                    stop_continuousMove.execute("stop");
+                    //PTZ stop_continuousMove = new PTZ();
+                    //stop_continuousMove.execute("stop");
                 }
                 return false;
             }
@@ -315,13 +332,13 @@ public class TronXPlayer extends AppCompatActivity {
                     x = (-1);
                     y = 0;
                     z = 0;
-                    PTZ top_continuousMove = new PTZ();
-                    top_continuousMove.execute("continuousMove");
+                    //PTZ top_continuousMove = new PTZ();
+                    //top_continuousMove.execute("continuousMove");
                 }
                 if(event.getAction() == MotionEvent.ACTION_UP){
                     //Left.setBackgroundResource(R.drawable.circle);
-                    PTZ stop_continuousMove = new PTZ();
-                    stop_continuousMove.execute("stop");
+                    //PTZ stop_continuousMove = new PTZ();
+                    //stop_continuousMove.execute("stop");
                 }
                 return false;
             }
@@ -335,19 +352,19 @@ public class TronXPlayer extends AppCompatActivity {
                     x = (1);
                     y = 0;
                     z = 0;
-                    PTZ top_continuousMove = new PTZ();
-                    top_continuousMove.execute("continuousMove");
+                    //PTZ top_continuousMove = new PTZ();
+                    //top_continuousMove.execute("continuousMove");
                 }
                 if(event.getAction() == MotionEvent.ACTION_UP){
                     //Right.setBackgroundResource(R.drawable.circle);
-                    PTZ stop_continuousMove = new PTZ();
-                    stop_continuousMove.execute("stop");
+                    //PTZ stop_continuousMove = new PTZ();
+                    //stop_continuousMove.execute("stop");
                 }
                 return false;
             }
         });
 
-        ZoomIn.setOnTouchListener(new View.OnTouchListener(){
+       /* ZoomIn.setOnTouchListener(new View.OnTouchListener(){
 
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -387,8 +404,8 @@ public class TronXPlayer extends AppCompatActivity {
                 }
                 return false;
             }
-        });
-    }*/
+        });*/
+    }
 
     private void fadeOutAndHideImage(final ImageView img){
         Animation fadeOut = new AlphaAnimation(1, 0);
