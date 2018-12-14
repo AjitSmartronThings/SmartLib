@@ -21,16 +21,19 @@ import com.things.smartcam.TronXCamera;
 
 import java.util.List;
 
-public class CameraAdapter extends RecyclerView.Adapter<CameraViewHolder>{
+public class CameraAdapter extends RecyclerView.Adapter<CameraViewHolder> {
 
     private Context context;
     private List<TronXCamera> listProducts;
 
     private DbCamera mDatabase;
 
-    public CameraAdapter(Context context, List<TronXCamera> listProducts) {
+    ItemClickListener itemClickListener;
+
+    public CameraAdapter(Context context, List<TronXCamera> listProducts,ItemClickListener clickListener) {
         this.context = context;
         this.listProducts = listProducts;
+        this.itemClickListener=clickListener;
         mDatabase = new DbCamera(context);
     }
 
@@ -66,6 +69,17 @@ public class CameraAdapter extends RecyclerView.Adapter<CameraViewHolder>{
                 context.startActivity(((Activity) context).getIntent());
             }
         });
+
+        holder.setItemClickListener(new ItemClickListener() {
+            @Override
+            public void onItemClick(View v, int pos, TronXCamera tronXCamera) {
+                TronXCamera tronXCamera1 = mDatabase.getCamera(singleProduct.getId());
+                //Toast.makeText(context, ""+tronXCamera1.getInternalHost()+" "+tronXCamera1.getInternalHttp(), Toast.LENGTH_SHORT).show();
+                itemClickListener.onItemClick(v,pos,tronXCamera1);
+            }
+        });
+
+
     }
 
     @Override

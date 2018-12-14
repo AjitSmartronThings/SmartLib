@@ -87,6 +87,7 @@ public class TronXPlayer extends AppCompatActivity {
     //    String serverUri = "http://140.118.7.11/onvif_storage.php";
     String serverUri = "http://140.118.7.11:8080";
     double x, y, z;
+
     Button Top, Down, Left, Right, ZoomIn, ZoomOut;
     ImageView reddot;
     TextView time;
@@ -147,10 +148,10 @@ public class TronXPlayer extends AppCompatActivity {
         player1 = (MediaPlayer)findViewById(R.id.playerView1);
         loaderIndicator1 = (ProgressBar)findViewById(R.id.loaderIndicator1);
         Player1CallBacks = new PlayerCallBacks(this, player1);
-       Top = (Button)findViewById(R.id.Top);
-        Down = (Button)findViewById(R.id.Down);
-        Left = (Button)findViewById(R.id.Left);
-        Right = (Button)findViewById(R.id.Right);
+       //Top = (Button)findViewById(R.id.Top);
+        //Down = (Button)findViewById(R.id.Down);
+        //Left = (Button)findViewById(R.id.Left);
+        //Right = (Button)findViewById(R.id.Right);
      /*   ZoomIn = (Button)findViewById(R.id.ZoomIn);
         ZoomOut = (Button)findViewById(R.id.ZoomOut);
         record = (ImageButton)findViewById(R.id.record);

@@ -3,12 +3,15 @@ package com.things.smartcam;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.things.smartcam.util.Commons;
 import com.things.smartlib.OnvifManager;
 import com.things.smartlib.listeners.DeviceMediaProfileListener;
 import com.things.smartlib.listeners.OnvifDeviceInformationListener;
@@ -35,8 +38,6 @@ public class Add_Camera_Manually extends AppCompatActivity implements OnvifRespo
 
     Button addCamera;
 
-    Button seeCamera;
-
     TronXCamera tronXCamera;
 
     OnvifManager onvifManager;
@@ -46,12 +47,16 @@ public class Add_Camera_Manually extends AppCompatActivity implements OnvifRespo
     DeviceMediaProfile mediaProfile;
     String profile,streamuri;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add__camera__manually);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle("");
+        TextView toolbartext = (TextView) findViewById(R.id.toolbar_title);
+        toolbartext.setText("Add Camera");
+        setSupportActionBar(toolbar);
 
         onvifManager = new OnvifManager();
         onvifManager.setOnvifResponseListener(this);
@@ -71,15 +76,7 @@ public class Add_Camera_Manually extends AppCompatActivity implements OnvifRespo
         }
 
         addCamera = (Button) findViewById (R.id.addCamera);
-        seeCamera = (Button) findViewById (R.id.seeCamera);
 
-        seeCamera.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //Intent dbmanager = new Intent(Add_Camera_Manually.this,AndroidDatabaseManager.class);
-                //startActivity(dbmanager);
-            }
-        });
 
         addCamera.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -90,6 +87,21 @@ public class Add_Camera_Manually extends AppCompatActivity implements OnvifRespo
                 cameraUsername = txtcameraUsername.getText().toString();
                 cameraPassword = txtcameraPassword.getText().toString();
 
+                if (!Commons.isEmptyEditText(cameraName)) {
+                    Toast.makeText(Add_Camera_Manually.this, "Please enter Camera Name", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if (!Commons.isIP(cameraInternalUrl)) {
+                    Toast.makeText(Add_Camera_Manually.this, "Please enter valid ip", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if (!Commons.isPortStringValid(cameraHttp)) {
+                    Toast.makeText(Add_Camera_Manually.this, "Please enter valid port No. between 0 to 65535", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 tronXCamera = new TronXCamera();
 
                 tronXCamera.setName(cameraName);
@@ -97,8 +109,8 @@ public class Add_Camera_Manually extends AppCompatActivity implements OnvifRespo
                 tronXCamera.setInternalHttp(cameraHttp);
                 tronXCamera.setUsername(cameraUsername);
                 tronXCamera.setPassword(cameraPassword);
-               createCamera(tronXCamera);
 
+                addDevice();
 
             }
         });
@@ -108,9 +120,10 @@ public class Add_Camera_Manually extends AppCompatActivity implements OnvifRespo
         try {
             DbCamera dbCamera = new DbCamera(this);
             dbCamera.addCamera(tronXCamera);
+            finish();
         } catch (Exception e) {
             String errorMessage = e.getMessage();
-            Log.e(TAG, "add camera to evercam: " + e.getMessage());
+            Log.e(TAG, "add camera to TThings: " + e.getMessage());
         }
     }
 
@@ -121,7 +134,7 @@ public class Add_Camera_Manually extends AppCompatActivity implements OnvifRespo
 
     @Override
     public void onError(OnvifDevice onvifDevice, int errorCode, String errorMessage) {
-
+        Toast.makeText(Add_Camera_Manually.this, "Device Not Added", Toast.LENGTH_SHORT).show();
     }
 
     private void addDevice(){
@@ -141,7 +154,8 @@ public class Add_Camera_Manually extends AppCompatActivity implements OnvifRespo
                     Add_Camera_Manually.this.runOnUiThread(new Runnable() {
                         public void run() {
                             Toast.makeText(Add_Camera_Manually.this, "Device added successfully", Toast.LENGTH_SHORT).show();
-                            getServices();
+                            createCamera(tronXCamera);
+                            //getServices();
                         }
                     });
                 }
@@ -346,5 +360,7 @@ public class Add_Camera_Manually extends AppCompatActivity implements OnvifRespo
         intent.putExtras(bundle);
         startActivity(intent);
     }
+
+
 
 }

@@ -21,7 +21,7 @@
 
     </veg.mediaplayer.sdk.MediaPlayer>
 
-    <RelativeLayout
+   <!-- <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -56,5 +56,5 @@
         android:layout_height="wrap_content"
         android:text="Down"
         android:id="@+id/Down"/>
-    </RelativeLayout>
+    </RelativeLayout>-->
 </FrameLayout>

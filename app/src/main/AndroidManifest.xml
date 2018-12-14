@@ -21,7 +21,8 @@
 
         </activity>
         <activity android:name=".AddCamDialog"></activity>
-        <activity android:name=".Add_Camera_Manually" />
+        <activity android:name=".Add_Camera_Manually"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity android:name=".PlayerActivity" />
         <activity
             android:name=".LanSearch"
@@ -35,6 +36,11 @@
             android:theme="@style/AppTheme.NoActionBar"></activity>
 
         <activity android:name=".activities.CameraListActivity">
+
+        </activity>
+
+        <activity android:name=".activities.HomeActivity"
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

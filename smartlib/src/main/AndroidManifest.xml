@@ -1,7 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.things.smartlib" >
     <application>
-        <activity android:name=".player.TronXPlayer">
+        <activity android:name=".player.TronXPlayer"
+            android:theme="@style/AppTheme.NoActionBar">
 
         </activity>
         <activity android:name=".player.TronXMultiPlayer">

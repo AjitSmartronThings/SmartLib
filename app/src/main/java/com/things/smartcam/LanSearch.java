@@ -9,7 +9,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.FrameLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.things.smartlib.FindDevicesThread;
 import com.things.smartlib.listeners.OnvifResponseListener;
@@ -38,12 +40,21 @@ public class LanSearch extends AppCompatActivity implements OnvifResponseListene
     String ipAddressString;
     String onvifPort;
 
+    FrameLayout noDeviceFound;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lan_search);
 
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle("");
+        TextView toolbartext = (TextView) findViewById(R.id.toolbar_title);
+        toolbartext.setText("Lan Search");
+        setSupportActionBar(toolbar);
+
         listView = (ListView) findViewById(R.id.listView1);
+        noDeviceFound = (FrameLayout) findViewById(R.id.noDeviceFound);
         devices = new ArrayList<>();
         adapter = new DevicesAdapter(this, devices);
         listView.setAdapter(adapter);
@@ -59,6 +70,7 @@ public class LanSearch extends AppCompatActivity implements OnvifResponseListene
                 Intent intent = new Intent(LanSearch.this,Add_Camera_Manually.class);
                 intent.putExtras(bundle);
                 startActivity(intent);
+                finish();
                 //new GetDeviceInfoThread(devices.get(position), MainActivity.this, MainActivity.this).start();
             }
         });
@@ -84,7 +96,8 @@ public class LanSearch extends AppCompatActivity implements OnvifResponseListene
                     String urlString = var11[var17];
                     URL localURL = new URL(urlString);
                     String urlHost = localURL.getHost();
-                    if (IpTranslator.isLocalIpv4(urlHost)) {
+                    if (IpTranslator.
+                            isLocalIpv4(urlHost)) {
                         ipAddressString = urlHost;
                         httpPort = localURL.getPort();
 
@@ -112,8 +125,25 @@ public class LanSearch extends AppCompatActivity implements OnvifResponseListene
             public void run() {
                 pg.dismiss();
                 adapter.notifyDataSetChanged();
+                if(adapter.getCount()>0) {
+                    resVisibility(true);
+                }else
+                {
+                    resVisibility(false);
+                }
             }
         });
+    }
+
+    private void resVisibility(boolean b) {
+        if(b==true) {
+            listView.setVisibility(View.VISIBLE);
+            noDeviceFound.setVisibility(View.GONE);
+        }else
+        {
+            listView.setVisibility(View.GONE);
+            noDeviceFound.setVisibility(View.VISIBLE);
+        }
     }
 
     private void searchDevices()

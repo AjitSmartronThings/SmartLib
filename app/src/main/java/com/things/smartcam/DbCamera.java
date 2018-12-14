@@ -126,9 +126,11 @@ public class DbCamera extends DatabaseMaster {
                 null, null);
         if (cursor != null) {
             if (cursor.moveToFirst()) {
-                tronXCamera = new TronXCamera();
-                tronXCamera = getCameraFromCursor(cursor, tronXCamera);
-                cameras.add(tronXCamera);
+                do {
+                    tronXCamera = new TronXCamera();
+                    tronXCamera = getCameraFromCursor(cursor, tronXCamera);
+                    cameras.add(tronXCamera);
+                }while (cursor.moveToNext());
             }
             cursor.close();
         }

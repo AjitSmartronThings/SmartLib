@@ -21,10 +21,11 @@ import com.things.smartcam.LanSearch;
 import com.things.smartcam.R;
 import com.things.smartcam.TronXCamera;
 import com.things.smartcam.adapter.CameraAdapter;
+import com.things.smartcam.adapter.ItemClickListener;
 
 import java.util.List;
 
-public class CameraListActivity extends AppCompatActivity {
+public class CameraListActivity extends AppCompatActivity implements ItemClickListener {
 
     private static final String TAG = CameraListActivity.class.getSimpleName();
 
@@ -47,7 +48,7 @@ public class CameraListActivity extends AppCompatActivity {
 
         if(allCameras.size() > 0){
             productView.setVisibility(View.VISIBLE);
-            CameraAdapter mAdapter = new CameraAdapter(this, allCameras);
+            CameraAdapter mAdapter = new CameraAdapter(this, allCameras,this);
             productView.setAdapter(mAdapter);
 
         }else {
@@ -115,5 +116,11 @@ public class CameraListActivity extends AppCompatActivity {
         if(mDatabase != null){
             mDatabase.close();
         }
+    }
+
+
+    @Override
+    public void onItemClick(View v, int pos, TronXCamera tronXCamera) {
+
     }
 }

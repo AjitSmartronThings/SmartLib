@@ -93,6 +93,7 @@ public class OnvifExecutor {
 
     private Credentials credentials;
     private OnvifResponseListener onvifResponseListener;
+    private static final String FORMAT_HTTP = "http://%s";
 
     //Constructors
 
@@ -276,6 +277,7 @@ public class OnvifExecutor {
 
     private String getUrlForRequest(OnvifDevice device, OnvifRequest request) {
         String requestUrl = device.getHost();
+        requestUrl = buildUrl(requestUrl);
         return requestUrl + getPathForRequest(device, request);
     }
 
@@ -306,6 +308,13 @@ public class OnvifExecutor {
             e.printStackTrace();
             return "";
         }
+    }
+
+    private String buildUrl(String url) {
+        if (url.startsWith("http://") || url.startsWith("https://"))
+            return url;
+
+        return String.format(Locale.getDefault(), FORMAT_HTTP, url);
     }
 
 }

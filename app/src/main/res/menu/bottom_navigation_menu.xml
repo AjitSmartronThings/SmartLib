@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/bottom_home"
+        android:icon="@drawable/ic_home"
+        android:title="My Home" />
+    <item
+        android:id="@+id/bottom_screens"
+        android:icon="@drawable/ic_refer"
+        android:title="Screens" />
+    <item
+        android:id="@+id/bottom_camera"
+        android:icon="@drawable/ic_withdraw"
+        android:title="Camera" />
+</menu>
