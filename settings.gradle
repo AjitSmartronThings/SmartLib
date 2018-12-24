@@ -1,1 +1,1 @@
-include ':app', ':smartlib'
+include ':app', ':smartlib', ':library'

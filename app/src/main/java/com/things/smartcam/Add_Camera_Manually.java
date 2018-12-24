@@ -2,6 +2,7 @@ package com.things.smartcam;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -25,7 +26,11 @@ import com.things.smartlib.models.OnvifServices;
 import com.things.smartlib.player.TronXPlayer;
 import com.things.smartlib.responses.OnvifResponse;
 
+import java.io.IOException;
 import java.io.Serializable;
+import java.net.InetSocketAddress;
+import java.net.Socket;
+import java.net.SocketAddress;
 import java.util.List;
 
 public class Add_Camera_Manually extends AppCompatActivity implements OnvifResponseListener {
@@ -110,7 +115,17 @@ public class Add_Camera_Manually extends AppCompatActivity implements OnvifRespo
                 tronXCamera.setUsername(cameraUsername);
                 tronXCamera.setPassword(cameraPassword);
 
-                addDevice();
+                //addDevice();
+
+                Boolean b = isOnline();
+                
+                if(b == true)
+                {
+                    addDevice();
+                }else
+                {
+                    Toast.makeText(Add_Camera_Manually.this, "No Onvif Device", Toast.LENGTH_SHORT).show();
+                }
 
             }
         });
@@ -129,12 +144,20 @@ public class Add_Camera_Manually extends AppCompatActivity implements OnvifRespo
 
     @Override
     public void onResponse(OnvifDevice onvifDevice, OnvifResponse onvifResponse) {
-
+        Add_Camera_Manually.this.runOnUiThread(new Runnable() {
+            public void run() {
+                Toast.makeText(Add_Camera_Manually.this, "Device OnResponse", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override
     public void onError(OnvifDevice onvifDevice, int errorCode, String errorMessage) {
-        Toast.makeText(Add_Camera_Manually.this, "Device Not Added", Toast.LENGTH_SHORT).show();
+        Add_Camera_Manually.this.runOnUiThread(new Runnable() {
+            public void run() {
+                Toast.makeText(Add_Camera_Manually.this, "Device OnError", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void addDevice(){
@@ -144,8 +167,10 @@ public class Add_Camera_Manually extends AppCompatActivity implements OnvifRespo
             Toast.makeText(Add_Camera_Manually.this, "Enter Device IP or Search for devices", Toast.LENGTH_SHORT).show();
             return;
         }*/
+        
+        
 
-        onvifDevice = new OnvifDevice("http://"+cameraInternalUrl+":"+cameraHttp, "admin", "admin");
+        onvifDevice = new OnvifDevice(cameraInternalUrl+":"+cameraHttp, "admin", "admin");
         onvifManager.getServices(onvifDevice, new OnvifServiceListener() {
             @Override
             public void onServicesReceived(OnvifDevice onvifDevice, OnvifServices onvifServices) {
@@ -171,6 +196,36 @@ public class Add_Camera_Manually extends AppCompatActivity implements OnvifRespo
             }
         });
         //onvifDevice = new OnvifDevice(deviceUri.getText().toString(), deviceuser.getText().toString(), devicepassword.getText().toString());
+    }
+
+    private boolean isOnline() {
+
+        if (android.os.Build.VERSION.SDK_INT > 9)
+        {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+        }
+        Socket socket = null;
+        try {
+            SocketAddress sockaddr = new InetSocketAddress(cameraInternalUrl, Integer.parseInt(cameraHttp));
+            socket = new Socket();
+
+            socket.connect(sockaddr, 5000);
+        }
+        catch (NumberFormatException | IOException e) {
+            return false;
+        }
+        finally {
+            try {
+                if (socket != null) {
+                    socket.close();
+                }
+            }
+            catch (IOException ex) {
+                ex.getMessage();
+            }
+        }
+        return true;
     }
 
     private void getServices() {

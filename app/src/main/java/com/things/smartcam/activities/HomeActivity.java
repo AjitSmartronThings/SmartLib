@@ -28,6 +28,7 @@ import com.things.smartcam.Add_Camera_Manually;
 import com.things.smartcam.Fragment.CameraFragment;
 import com.things.smartcam.Fragment.EarnFragment;
 import com.things.smartcam.Fragment.FullScreenDialog;
+import com.things.smartcam.Fragment.IPCamFragment;
 import com.things.smartcam.Fragment.ReferFragment;
 import com.things.smartcam.MainActivity;
 import com.things.smartcam.R;
@@ -91,7 +92,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                         return true;
                     case R.id.bottom_camera:
                         //toolbar.setTitle("IP Camera");
-                        fragment = new CameraFragment();
+                        //fragment = new CameraFragment();
+                        fragment = new IPCamFragment();
                         loadFragment(fragment);
                         return true;
                 }

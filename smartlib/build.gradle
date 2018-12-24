@@ -27,6 +27,17 @@ android {
         targetCompatibility 1.8
         sourceCompatibility 1.8
     }
+
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/license.txt'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/notice.txt'
+        exclude 'META-INF/ASL2.0'
+    }
 }
 
 dependencies {
@@ -38,5 +49,6 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     implementation 'com.squareup.okhttp3:okhttp:3.11.0'
     implementation 'com.burgstaller:okhttp-digest:1.18'
-    implementation files('src/main/jniLibs/mediaplayersdk.jar')
+    //implementation files('src/main/jniLibs/mediaplayersdk.jar')
+    implementation 'com.vxg.mediasdk:playersdk:2.0.55'
 }

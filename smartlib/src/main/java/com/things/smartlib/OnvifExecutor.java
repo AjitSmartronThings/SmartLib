@@ -159,6 +159,8 @@ public class OnvifExecutor {
         client.newCall(xmlRequest)
                 .enqueue(new Callback() {
 
+
+
                     @Override
                     public void onResponse(Call call, Response xmlResponse) throws IOException {
 

@@ -280,11 +280,11 @@ public class CameraFragment extends Fragment implements ItemClickListener,OnvifR
 
     @Override
     public void onResponse(OnvifDevice onvifDevice, OnvifResponse onvifResponse) {
-
+        //Toast.makeText(getActivity(), "Response", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onError(OnvifDevice onvifDevice, int errorCode, String errorMessage) {
-
+        //Toast.makeText(getActivity(), "Error", Toast.LENGTH_SHORT).show();
     }
 }
